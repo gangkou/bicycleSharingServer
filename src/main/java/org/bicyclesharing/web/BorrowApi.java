@@ -53,7 +53,7 @@ public class BorrowApi {
                     bicycle.setBicycleStatement(0);
                     bicycleService.editBicycyle(bicycleId, bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
                     return "1";
-                } else return "-2";//未交押金
+                } else {return "-2";}//未交押金
             } else {
                 return "0";//该车正在使用中
             }
@@ -93,7 +93,7 @@ public class BorrowApi {
     }
 
     /**
-     * 3.查询当前(最后一条)借车记录api(真的蠢,当初为什么要根据车id查询最后一条记录)
+     * 3.查询当前(最后一条)借车记录api
      */
     @RequestMapping(value = "api-borrow-currentBorrow/{userName}")
     @ResponseBody
@@ -101,6 +101,6 @@ public class BorrowApi {
         ArrayList<Borrow> borrows = (ArrayList<Borrow>) borrowService.getBorrowByUserId(userService.getUserByName(userName).getUserId());
         if (borrows.size() >= 1) {
             return borrows.get(borrows.size() - 1);
-        } else return null;
+        } else {return null;}
     }
 }

@@ -65,17 +65,18 @@ public class IndexController {
         //管理员通知
         ArrayList<AdminMessage> adminMessages = (ArrayList<AdminMessage>) adminService.getAllAdminMessage();
         requestMap.put("adminMessages", adminMessages);
-        //修改车辆状况
-        ArrayList<Bicycle> bicycles = (ArrayList<Bicycle>) bicycleService.getAllBicycle();
-        for (Bicycle bicycle : bicycles) {
-            if (DateCompareUtil.differentDaysByMillisecond(bicycle.getBicycleLastTime(), new Date()) > 4 && bicycle.getBicycleStatement() == 1) {
-                bicycle.setBicycleStatement(-1);
-                bicycleService.editBicycyle(bicycle.getBicycleId(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
-            } else if (DateCompareUtil.differentDaysByMillisecond(bicycle.getBicycleLastTime(), new Date()) <= 4 && bicycle.getBicycleStatement() == -1) {
-                bicycle.setBicycleStatement(1);
-                bicycleService.editBicycyle(bicycle.getBicycleId(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
-            }
-        }
+
+        //修改车辆状况  自动切换车辆状况  4天内有使用过 为正常 4天内未使用 为异常 演示时注释.
+//        ArrayList<Bicycle> bicycles = (ArrayList<Bicycle>) bicycleService.getAllBicycle();
+//        for (Bicycle bicycle : bicycles) {
+//            if (DateCompareUtil.differentDaysByMillisecond(bicycle.getBicycleLastTime(), new Date()) > 4 && bicycle.getBicycleStatement() == 1) {
+//                bicycle.setBicycleStatement(-1);
+//                bicycleService.editBicycyle(bicycle.getBicycleId(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
+//            } else if (DateCompareUtil.differentDaysByMillisecond(bicycle.getBicycleLastTime(), new Date()) <= 4 && bicycle.getBicycleStatement() == -1) {
+//                bicycle.setBicycleStatement(1);
+//                bicycleService.editBicycyle(bicycle.getBicycleId(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
+//            }
+//        }
         return "index/index_content";
     }
 

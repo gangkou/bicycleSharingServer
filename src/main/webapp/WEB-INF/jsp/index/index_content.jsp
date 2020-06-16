@@ -11,7 +11,7 @@
 <head>
     <title>MtLa单车后台管理</title>
     <%@include file="../common/head.jsp" %>
-    <!--地图引入,希望能自己去申请一个key(免费),高德地图api-->
+    <!--地图引入 高德地图api-->
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.3&key=a5e29f343721cf6a5c29a9ea1ceaf709"></script>
@@ -102,12 +102,12 @@
                 </div>
             </div>
             <!--车辆地图-->
-            <%--      <li class="sidebar-nav-link">
-                      <a href="javascript:;" class="sidebar-nav-sub-title">
-                          <i class="am-icon-map sidebar-nav-link-logo"></i> 地图查看
-                          <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-                      </a>
-                      <ul class="sidebar-nav sidebar-nav-sub">--%>
+           <%--<li class="sidebar-nav-link">--%>
+                      <%--<a href="javascript:;" class="sidebar-nav-sub-title">--%>
+                          <%--<i class="am-icon-map sidebar-nav-link-logo"></i> 地图查看--%>
+                          <%--<span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>--%>
+                      <%--</a>--%>
+                      <%--<ul class="sidebar-nav sidebar-nav-sub">--%>
             <div class="row am-cf">
                 <div class="am-u-sm-12 am-u-md-12">
                     <div class="widget am-cf">
@@ -117,9 +117,9 @@
                                 var map = new AMap.Map('container', {
                                     resizeEnable: true,
                                     zoom: 20,
-                                    center: [118.642371, 32.036997]
+                                    center: [113.488551,34.142126]
                                 });
-                                // 请求地址(记得改为局域网地址,localhost只在本机可以看见点)
+                                // 请求地址
                                 var url = '${pageContext.request.contextPath }/';
                                 var greenX = url + 'api-bicycle-getX/1';
                                 var greenY = url + 'api-bicycle-getY/1';
@@ -133,19 +133,18 @@
                                     greenBicycleCurrentX = JSON.parse(res);
                                     Ajax(greenY, function (res) {
                                         greenBicycleCurrentY = JSON.parse(res);
-                                        initGreen();
-                                    })
-                                })
-                                // 请求红色单车的数据，先获取X再获取Y，然后初始化
-                                Ajax(redX, function (res) {
-                                    redBicycleCurrentX = JSON.parse(res);
-                                    Ajax(redY, function (res) {
-                                        redBicycleCurrentY = JSON.parse(res);
-                                        initRed();
+                                        Ajax(redX, function (res) {
+                                            redBicycleCurrentX = JSON.parse(res);
+                                            Ajax(redY, function (res) {
+                                                redBicycleCurrentY = JSON.parse(res);
+                                                init();
+                                            })
+                                        })
                                     })
                                 })
 
-                                function initGreen() {
+
+                                function init(){
                                     for (var i = 0; i < greenBicycleCurrentX.length; i++) {
                                         marker = new AMap.Marker({
                                             icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
@@ -153,9 +152,7 @@
                                         });
                                         marker.setMap(map);
                                     }
-                                }
 
-                                function initRed() {
                                     for (var i = 0; i < redBicycleCurrentX.length; i++) {
                                         marker = new AMap.Marker({
                                             icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_r.png",
@@ -177,6 +174,7 @@
                                         }
                                     }
                                 }
+
                             </script>
                         </div>
                     </div>

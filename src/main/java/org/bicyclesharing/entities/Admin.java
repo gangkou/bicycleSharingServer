@@ -6,7 +6,6 @@ package org.bicyclesharing.entities;
  * @date 2020/6/13
  **/
 public class Admin {
-    //如果实体类(一般在dto类里面)里面有state+stateInfo这样的属性,可以将两者摘出来,弄个枚举类,美化代码
     //管理员id,因为是主键,设置了自增,用Integer部分功能将没法使用
     private Integer adminId;
     //管理员名
@@ -16,10 +15,6 @@ public class Admin {
     //管理员邮箱
     private String adminEmail;
 
-    /**
-     * 当建立一个带参覆盖的构造方法后,必须显式声明出无参的构造函数
-     * 后面就因此出现了No constructor found in ...matching ...
-     */
     public Admin() {
     }
 

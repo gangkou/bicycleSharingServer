@@ -30,7 +30,7 @@
         WHERE user_id = #{userId}
     </select>
     <!--6.查询当天用户充值总金额-->
-    <select id="selectRechargeCount" resultType="BigDecimal">
+    <select id="selectRechargeCount" resultType="Decimal">
         SELECT sum(recharge_amount)
         FROM recharge
         WHERE DATE(recharge_time) = current_date
