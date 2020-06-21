@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bicyclesharing.dao.EmploeeDao">
+
+    <!--1.通过员工id查询管理员信息-->
+<select id="selectEmploeeById" resultMap="resultmap">
+       select b.Emploeeid,b.Emploeename,b.Emploeeage,b.Emploeesex,b.Emploeeemail,u.depart_id,u.depart_name from emploee b
+        left join department u on b.Emploeedepartmentid=u.depart_id where b.Emploeeid=#{emploeeid}
+</select>
+    <resultMap id="resultmap" type="Emploee">
+        <id column="Emploeeid" property="emploeeid"/>
+        <result column="Emploeename" property="emploeename"/>
+        <result column="Emploeeage" property="emploeeage"/>
+        <result column="Emploeesex" property="emploeesex"/>
+        <result column="Emploeeemail" property="emploeeemail"/>
+        <association property="emploeedepartment" javaType="Department" >
+            <id column="depart_id" property="depart_id"/>
+            <result property="depart_name" column="depart_name"/>
+        </association>
+    </resultMap>
+
+    <!--2.通过员工名字查询管理员信息-->
+    <select id="selectEmploeeByName" resultMap="resultmapname">
+       select b.Emploeeid,b.Emploeename,b.Emploeeage,b.Emploeesex,b.Emploeeemail,u.depart_id,u.depart_name from emploee b
+        left join department u on b.Emploeedepartmentid=u.depart_id where b.Emploeename=#{emploeename}
+</select>
+    <resultMap id="resultmapname" type="Emploee">
+        <id column="Emploeeid" property="emploeeid"/>
+        <result column="Emploeename" property="emploeename"/>
+        <result column="Emploeeage" property="emploeeage"/>
+        <result column="Emploeesex" property="emploeesex"/>
+        <result column="Emploeeemail" property="emploeeemail"/>
+        <association property="emploeedepartment" javaType="Department" >
+            <id column="depart_id" property="depart_id"/>
+            <result property="depart_name" column="depart_name"/>
+        </association>
+    </resultMap>
+
+    <!--3.查询所有员工信息-->
+    <select id="selectAllEmploee" resultMap="resultmapall">
+       select b.Emploeeid,b.Emploeename,b.Emploeeage,b.Emploeesex,b.Emploeeemail,u.depart_id,u.depart_name from emploee b
+        left join department u on b.Emploeedepartmentid=u.depart_id
+</select>
+    <resultMap id="resultmapall" type="Emploee">
+        <id column="Emploeeid" property="emploeeid"/>
+        <result column="Emploeename" property="emploeename"/>
+        <result column="Emploeeage" property="emploeeage"/>
+        <result column="Emploeesex" property="emploeesex"/>
+        <result column="Emploeeemail" property="emploeeemail"/>
+        <association property="emploeedepartment" javaType="Department" >
+            <id column="depart_id" property="depart_id"/>
+            <result property="depart_name" column="depart_name"/>
+        </association>
+    </resultMap>
+    <!--4.插入管理员(insert)-->
+    <insert id="insertEmploee" parameterType="Emploee">
+        INSERT INTO emploee (Emploeename, Emploeeage,Emploeesex,Emploeeemail,Emploeedepartmentid)
+        VALUES (#{emploeename}, #{emploeeage},#{emploeesex},#{emploeeemail}, #{emploeedepartment.depart_id})
+    </insert>
+    <!--5.根据管理员id删除管理员-->
+    <delete id="deleteEmploee" parameterType="Integer">
+        DELETE FROM emploee
+        WHERE Emploeeid = #{emploeeId}
+    </delete>
+    <!--6.更新管理员信息(单行)-->
+    <update id="updateEmploee" parameterType="Emploee">
+        UPDATE emploee
+        SET Emploeename = #{emploeename}, Emploeeemail = #{emploeeemail},Emploeeage = #{emploeeage},Emploeesex = #{emploeesex},Emploeedepartmentid = #{emploeedepartment.depart_id}
+        WHERE Emploeeid = #{emploeeid}
+    </update>
+    <!--7.通过名称模糊(like)查询符合条件管理员-->
+    <select id="selectEmploeeByNameLike" parameterType="String" resultType="Emploee">
+        SELECT *
+        FROM emploee
+        WHERE Emploeename LIKE '%${_parameter}%'
+    </select>
+
+</mapper>

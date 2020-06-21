@@ -29,27 +29,32 @@
         </li>
         <li class="sidebar-nav-link">
             <a href="${pageContext.request.contextPath }/admin-user-list-show?page=1" id="user">
-                <i class="am-icon-user sidebar-nav-link-logo"></i> 用户
+                <i class="am-icon-user sidebar-nav-link-logo"></i> 用户信息
             </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="${pageContext.request.contextPath }/admin-bicycle-list-show?page=1" id="bicycle">
-                <i class="am-icon-bicycle sidebar-nav-link-logo"></i> 单车
+                <i class="am-icon-bicycle sidebar-nav-link-logo"></i> 单车信息
             </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="${pageContext.request.contextPath }/admin-borrow-list-show?page=1" id="borrow">
-                <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 骑借
+                <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 骑借记录
             </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="${pageContext.request.contextPath }/admin-recharge-list-show?page=1" id="recharge">
-                <i class="am-icon-phone sidebar-nav-link-logo"></i> 充值
+                <i class="am-icon-phone sidebar-nav-link-logo"></i> 充值记录
             </a>
         </li>
         <li class="sidebar-nav-link">
             <a href="${pageContext.request.contextPath }/admin-feedback-list-show?page=1" id="feedback">
                 <i class="am-icon-android sidebar-nav-link-logo"></i> 用户反馈
+            </a>
+        </li>
+        <li class="sidebar-nav-link">
+            <a href="${pageContext.request.contextPath }/admin-emploee-list-show?page=1" id="emploee">
+                <i class="am-icon-user sidebar-nav-link-logo"></i> 员工信息
             </a>
         </li>
         <li class="sidebar-nav-link">

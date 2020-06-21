@@ -26,7 +26,7 @@ public class BicycleController {
     /**
      * 1.单车列表显示
      *
-     * @return bicycle/bicycle_list.jsp
+     * @return bicycle/emploee_list.jsp
      */
     @RequestMapping(value = "admin-bicycle-list-show", method = RequestMethod.GET)
     public String listShow(Map<String, Object> requestMap, @RequestParam("page") Integer page) {
@@ -75,7 +75,7 @@ public class BicycleController {
     /**
      * 2.搜索单车显示
      *
-     * @return bicycle/bicycle_list.jsp
+     * @return bicycle/emploee_list.jsp
      */
     @RequestMapping(value = "admin-bicycle-searchbicycle-show", method = RequestMethod.GET)
     public String searchBicycleShow(Map<String, Object> requestMap, @RequestParam("statement") Integer statement) {
@@ -88,7 +88,7 @@ public class BicycleController {
     /**
      * 3.新增单车显示
      *
-     * @return bicycle/bicycle_add.jsp
+     * @return bicycle/emploee_add.jsp
      */
     @RequestMapping(value = "admin-bicycle-addbicycle-show", method = RequestMethod.GET)
     public String addBicycleShow() {
@@ -98,7 +98,7 @@ public class BicycleController {
     /**
      * 4.新增单车执行
      *
-     * @return admin/bicycle_list.jsp
+     * @return admin/emploee_list.jsp
      */
     @RequestMapping(value = "admin-bicycle-addbicycle-execute", method = RequestMethod.POST)
     public String addBicycleExcute(@RequestParam("bicycleCurrentX") Double bicycleCurrentX, @RequestParam("bicycleCurrentY") Double bicycleCurrentY, @RequestParam("bicycleStatement") Integer bicycleStatement, @RequestParam("n") Integer n) {
