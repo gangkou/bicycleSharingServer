@@ -16,7 +16,7 @@ public interface BorrowService {
      * 1.添加租借记录
      * @return
      */
-    boolean addBorrow(Integer bicycleId, Integer userId, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining);
+    boolean addBorrow(Integer bicycleId, String userEmail, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining);
 
     /**
      * 2.按照id删除租借记录
@@ -45,10 +45,10 @@ public interface BorrowService {
     Borrow getBorrowLastByBicycleId(Integer bicycleId);
 
     /**
-     * 6.根据用户id查询租借记录
+     * 6.根据用户邮箱查询租借记录
      * @return
      */
-    List<Borrow> getBorrowByUserId(Integer userId);
+    List<Borrow> getBorrowByUserId(String email);
 
     BigDecimal getBorrowCost();
 

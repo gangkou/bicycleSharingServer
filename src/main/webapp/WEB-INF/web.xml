@@ -44,18 +44,19 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
     <!--配置错误信息 写代码时最好注释掉 以显示错误-->
-  <error-page>
-    <error-code>404</error-code>
-    <location>/404.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>400</error-code>
-    <location>/400.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/500.jsp</location>
-  </error-page>
+  <!--<error-page>-->
+    <!--<error-code>404</error-code>-->
+    <!--<location>/404.jsp</location>-->
+  <!--</error-page>-->
+  <!--<error-page>-->
+    <!--<error-code>400</error-code>-->
+    <!--<location>/400.jsp</location>-->
+  <!--</error-page>-->
+  <!--<error-page>-->
+    <!--<error-code>500</error-code>-->
+    <!--<location>/500.jsp</location>-->
+  <!--</error-page>-->
+
 
   <!--设置会话超时,永不超时-->
   <session-config>

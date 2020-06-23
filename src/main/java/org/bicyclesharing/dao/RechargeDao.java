@@ -43,10 +43,10 @@ public interface RechargeDao {
 
     /**
      * 5.查询指定用户的充值记录
-     * @param userId
+     * @param userEmail
      * @return
      */
-    List<Recharge> selectRechargeByUserId(Integer userId);
+    List<Recharge> selectRechargeByUserId(String userEmail);
 
     /**
      * 6.获取当天充值金总数

@@ -164,7 +164,6 @@ public class AdminController {
     public String registerExecute( @RequestParam("name") String name,
                                   @RequestParam("password") String password, @RequestParam("password2") String password2,
                                   @RequestParam("email") String email) {
-        System.out.println(name);
         boolean registerSuccess = adminService.addAdmin( name, password, password2, email);
         String view = "redirect:/admin-admin-list-show?page=1";
         if (!registerSuccess) {

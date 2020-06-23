@@ -54,10 +54,10 @@ public interface BorrowDao {
     /**
      * 7.根据用户id查询其租借记录
      *
-     * @param userId
+     * @param useremail
      * @return
      */
-    List<Borrow> selectBorrowByUserId(Integer userId);
+    List<Borrow> selectBorrowByUserId(String useremail);
 
     /**
      * 8.获取当天消费总额

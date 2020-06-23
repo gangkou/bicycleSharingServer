@@ -11,7 +11,7 @@ import java.util.Date;
 public class Borrow {
     private Integer borrowId;
     private Integer bicycleId;
-    private Integer userId;
+    private String userEmail;
     //借车时间段
     private Date borrowStartTime;
     private Date borrowEndTime;
@@ -48,9 +48,9 @@ public class Borrow {
     public Borrow() {
     }
 
-    public Borrow(Integer bicycleId, Integer userId, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
+    public Borrow(Integer bicycleId, String useremail, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
         this.bicycleId = bicycleId;
-        this.userId = userId;
+        this.userEmail = useremail;
         this.borrowStartTime = borrowStartTime;
         this.borrowEndTime = borrowEndTime;
         this.borrowStartX = borrowStartX;
@@ -61,10 +61,10 @@ public class Borrow {
         this.remaining = remaining;
     }
 
-    public Borrow(Integer borrowId, Integer bicycleId, Integer userId, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
+    public Borrow(Integer borrowId, Integer bicycleId, String  useremail, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
         this.borrowId = borrowId;
         this.bicycleId = bicycleId;
-        this.userId = userId;
+        this.userEmail = useremail;
         this.borrowStartTime = borrowStartTime;
         this.borrowEndTime = borrowEndTime;
         this.borrowStartX = borrowStartX;
@@ -91,12 +91,12 @@ public class Borrow {
         this.bicycleId = bicycleId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public Date getBorrowStartTime() {
@@ -168,7 +168,7 @@ public class Borrow {
         return "Borrow{" +
                 "borrowId=" + borrowId +
                 ", bicycleId=" + bicycleId +
-                ", userId=" + userId +
+                ", userEmail=" + userEmail +
                 ", borrowStartTime=" + borrowStartTime +
                 ", borrowEndTime=" + borrowEndTime +
                 ", borrowStartX=" + borrowStartX +

@@ -1,8 +1,10 @@
 package org.bicyclesharing.service.impl;
 
 import org.bicyclesharing.dao.UserDao;
+import org.bicyclesharing.entities.Admin;
 import org.bicyclesharing.entities.User;
 import org.bicyclesharing.service.UserService;
+import org.bicyclesharing.util.EncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,38 +22,40 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public boolean login(String username) {
-        if ("".equals(username)) {
-            return false;
-        }
-        User user = userDao.selectUserByName(username);
-        if (user == null) {
-            return false;
-        } else {
+    public boolean login(String useremail,String userpassword) {
+        User user=userDao.selectUserById(useremail);
+        if(user==null){
+         return false;
+        }else {
+            String passwordMD5 = EncoderUtil.EncoderByMd5(userpassword);
+            if (!user.getUserPassword().equals(passwordMD5)) {
+                return false;
+            }
             return true;
         }
     }
 
     @Override
-    public User getUserByName(String username) {
-        return userDao.selectUserByName(username);
+    public User getUserByEmail(String useremail) {
+        return userDao.selectUserById(useremail);
     }
 
     @Override
-    public boolean register(String username) {
-        if ("".equals(username)) {
+    public boolean register(String userEmail,String userName,String userPassword) {
+        if("".equals(userEmail)||"".equals(userName)||"".equals(userPassword)){
             return false;
-        }
-        User user = userDao.selectUserByName(username);
-        if (user == null) {
-            user = new User(username);
-            user.setUserCash(0);
-            user.setUserCredit(80);
-            user.setUserAccount(new BigDecimal(0.00));
-            userDao.insertUser(user);
-            return true;
         } else {
-            return false;
+                //插入
+                User user=new User();
+                user.setUserName(userName);
+                user.setUserAccount(new BigDecimal(0));
+                user.setUserCredit(80);
+                user.setUserEmail(userEmail);
+                user.setUserCash(0);
+                user.setUserPassword(EncoderUtil.EncoderByMd5(userPassword));
+                userDao.insertUser(user);
+                return true;
+
         }
     }
 
@@ -61,11 +65,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean removeUser(Integer id) {
-        if (id <= 0 || "".equals(id)) {
+    public boolean removeUser(String useremail) {
+        if ("".equals(useremail)) {
             return false;
         } else {
-            userDao.deleteUser(id);
+            userDao.deleteUser(useremail);
             return true;
         }
     }
@@ -76,19 +80,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean editUser(String userName, BigDecimal userAccount, Integer userCredit, Integer userCash) {
-        if ("".equals(userName) || "".equals(userAccount) || "".equals(userCredit) || "".equals(userCash)) {
+    public boolean editUser(User user) {
+        if (user==null) {
             return false;
-        } else {
-            User user = userDao.selectUserByName(userName);
-            if (user == null) {
+        }else{
+            User user1 = userDao.selectUserById(user.getUserEmail());
+            /**
+             * 必须修改密码,否则你不改的话,密码其实本身也是被修改了的,被再次MD5加密了
+             */
+            if (user.getUserPassword().equals(user1.getUserPassword())) {
                 return false;
-            } else {
-                int id = user.getUserId();
-                user = new User(id, userName, userAccount, userCredit, userCash);
-                userDao.updateUser(user);
-                return true;
             }
+            user1.setUserName(user.getUserName());
+            user1.setUserPassword(EncoderUtil.EncoderByMd5(user.getUserPassword()));
+            user1.setUserAccount(user.getUserAccount());
+            user1.setUserCash(user.getUserCash());
+            user1.setUserCredit(user.getUserCredit());
+            userDao.updateUser(user1);
+            return true;
         }
     }
 
@@ -98,24 +107,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetCredit(Integer userId) {
-        User user=userDao.selectUserById(userId);
+    public void resetCredit(String useremail) {
+        User user=userDao.selectUserById(useremail);
         user.setUserCredit(80);
         userDao.updateUser(user);
     }
 
     @Override
-    public void changeCashOne(Integer userId) {
-        User user=userDao.selectUserById(userId);
+    public void changeCashOne(String useremail) {
+        User user=userDao.selectUserById(useremail);
         user.setUserCash(199);
+        user.setUserAccount((user.getUserAccount().subtract(new BigDecimal(199))));
         userDao.updateUser(user);
     }
 
     @Override
-    public void changeCashTwo(Integer userId) {
-        User user=userDao.selectUserById(userId);
+    public void changeCashTwo(String useremail) {
+        User user=userDao.selectUserById(useremail);
         user.setUserCash(0);
+        user.setUserAccount(user.getUserAccount().add(new BigDecimal(199)));
         userDao.updateUser(user);
     }
 
+    @Override
+    public boolean editUserAccouunt(User user) {
+        if (user==null) {
+            return false;
+        }else{
+            User user1 = userDao.selectUserById(user.getUserEmail());
+
+            user1.setUserName(user.getUserName());
+            user1.setUserPassword(user.getUserPassword());
+            user1.setUserAccount(user.getUserAccount());
+            user1.setUserCash(user.getUserCash());
+            user1.setUserCredit(user.getUserCredit());
+            userDao.updateUser(user1);
+            return true;
+        }
+    }
 }

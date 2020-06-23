@@ -61,7 +61,7 @@
                             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
                                 <thead>
                                 <tr>
-                                    <th>用户编号</th>
+                                    <th>用户邮箱</th>
                                     <th>用户名</th>
                                     <th>余额</th>
                                     <th>信用度</th>
@@ -72,15 +72,15 @@
                                 <tbody>
                                 <c:forEach items="${requestScope.pageUsers }" var="users">
                                     <tr class="gradeX">
-                                        <td class="am-text-middle">${users.userId}</td>
+                                        <td class="am-text-middle">${users.userEmail}</td>
                                         <td class="am-text-middle">${users.userName}</td>
                                         <td class="am-text-middle">${users.userAccount}</td>
                                         <td class="am-text-middle">${users.userCredit}</td>
                                         <td class="am-text-middle">${users.userCash}</td>
                                         <td class="am-text-middle">
                                             <div class="tpl-table-black-operation">
-                                                <a href="${pageContext.request.contextPath }/admin-user-resetcredit-execute/${users.userId }">信用重置</a>
-                                                <a href="${pageContext.request.contextPath }/admin-admin-removeuser-execute/${users.userId}"
+                                                <a href="/admin-user-resetcredit-execute/${users.userEmail}">信用重置</a>
+                                                <a href="/admin-admin-removeuser-execute/${users.userEmail}"
                                                    class="tpl-table-black-operation-del">
                                                     删除
                                                 </a>

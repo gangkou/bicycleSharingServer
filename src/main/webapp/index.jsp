@@ -11,6 +11,6 @@
 </head>
 <body>
 <!--forward比重定向快-->
-<jsp:forward page="/admin-index-login-show"></jsp:forward>
+<jsp:forward page="/index_mtla"></jsp:forward>
 </body>
 </html>

@@ -10,7 +10,7 @@ import java.util.Date;
  **/
 public class Recharge {
     private Integer rechargeId;
-    private Integer userId;
+    private String userEmail;
     private BigDecimal rechargeAmount;
     private BigDecimal remaining;
     private Date rechargeTime;
@@ -28,16 +28,16 @@ public class Recharge {
     public Recharge() {
     }
 
-    public Recharge(Integer userId, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
-        this.userId = userId;
+    public Recharge(String userEmail, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
+        this.userEmail = userEmail;
         this.rechargeAmount = rechargeAmount;
         this.remaining = remaining;
         this.rechargeTime = rechargeTime;
     }
 
-    public Recharge(Integer rechargeId, Integer userId, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
+    public Recharge(Integer rechargeId, String userEmail, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
         this.rechargeId = rechargeId;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.rechargeAmount = rechargeAmount;
         this.remaining = remaining;
         this.rechargeTime = rechargeTime;
@@ -51,12 +51,12 @@ public class Recharge {
         this.rechargeId = rechargeId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public BigDecimal getRechargeAmount() {
@@ -87,7 +87,7 @@ public class Recharge {
     public String toString() {
         return "Recharge{" +
                 "rechargeId=" + rechargeId +
-                ", userId=" + userId +
+                ", userEmail=" + userEmail +
                 ", rechargeAmount=" + rechargeAmount +
                 ", remaining=" + remaining +
                 ", rechargeTime=" + rechargeTime +

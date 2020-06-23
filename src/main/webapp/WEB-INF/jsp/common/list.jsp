@@ -4,14 +4,13 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!-- 侧边导航栏 -->
 <div class="left-sidebar">
             <!-- 用户信息 -->
             <div class="tpl-sidebar-user-panel">
                 <div class="tpl-user-panel-slide-toggleable">
                     <div class="tpl-user-panel-profile-picture">
-                        <img src="${pageContext.request.contextPath }/resources/adminPhoto/admin${sessionScope.admin.adminId}.png" alt="">
+                        <img src="${pageContext.request.contextPath }/resources/adminPhoto/admin${sessionScope.admin.adminId}.png" alt=""  >
                     </div>
                     <span class="user-panel-logged-in-text">
               <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>

@@ -31,12 +31,12 @@ public class UserFeedbackServiceImpl implements UserFeedbackService {
 
     @Override
     public List<UserFeedback> getFeedbackByBicycleId(Integer bicycleId) {
-        return userFeedbackDao.selectUserFeedbackByUserId(1);
+        return userFeedbackDao.selectUserFeedbackByBicycleId(bicycleId);
     }
 
     @Override
-    public List<UserFeedback> getFeedbackByUserId(Integer userId) {
-        return userFeedbackDao.selectUserFeedbackByBicycleId(1);
+    public List<UserFeedback> getFeedbackByUserId(String userEmail ){
+        return userFeedbackDao.selectUserFeedbackByUserId(userEmail);
     }
 
     @Override

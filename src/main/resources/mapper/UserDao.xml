@@ -3,20 +3,20 @@
 <mapper namespace="org.bicyclesharing.dao.UserDao">
     <!--1.插入一个用户-->
     <insert id="insertUser" parameterType="User">
-        INSERT INTO user (user_id, user_name, user_account, user_credit, user_cash)
-        VALUES (#{userId}, #{userName}, #{userAccount}, #{userCredit}, #{userCash})
+        INSERT INTO user (user_email,user_password,user_name, user_account, user_credit, user_cash)
+        VALUES (#{userEmail},#{userPassword},#{userName}, #{userAccount}, #{userCredit}, #{userCash})
     </insert>
     <!--2.按照id删除一个用户-->
-    <delete id="deleteUser" parameterType="Integer">
+    <delete id="deleteUser" parameterType="String">
         DELETE FROM user
-        WHERE user_id = #{userId}
+        WHERE user_email = #{userEmail}
     </delete>
     <!--3.修改一个用户-->
     <update id="updateUser" parameterType="User">
         UPDATE user
         SET user_name   = #{userName}, user_account = #{userAccount},
-            user_credit = #{userCredit}, user_cash = #{userCash}
-        WHERE user_id = #{userId}
+            user_credit = #{userCredit}, user_cash = #{userCash},user_password=#{userPassword}
+        WHERE user_email = #{userEmail}
     </update>
     <!--4.查询用户名含有某个字段的用户-->
     <select id="selectUserByUserNameLike" parameterType="String" resultType="User">
@@ -36,14 +36,14 @@
         FROM user
     </select>
     <!--7.根据id查询用户-->
-    <select id="selectUserById" resultType="User" parameterType="Integer">
+    <select id="selectUserById" resultType="User" parameterType="String">
         SELECT *
         FROM user
-        WHERE user_id = #{userId}
+        WHERE user_email = #{userEmail}
     </select>
     <!--8.计算用户数量-->
     <select id="selectUserCount" resultType="Integer">
-        SELECT count(user_id)
+        SELECT count(user_email)
         FROM user
     </select>
     <!--9.根据信用度(低于userCredit)查询用户-->
@@ -53,7 +53,7 @@
         WHERE user_credit <![CDATA[ <=]]> #{userCredit}
     </select>
     <!--10.根据押金额查询用户-->
-    <select id="selectUserByCash" parameterType="Integer" resultType="Integer">
+    <select id="selectUserByCash" parameterType="Integer" resultType="User">
         SELECT *
         FROM user
         WHERE user_cash = #{userCash}

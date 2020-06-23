@@ -21,11 +21,11 @@ public class RechargeServiceImpl implements RechargeService {
     private RechargeDao rechargeDao;
 
     @Override
-    public boolean addRecharge(Integer userId, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
-        if ("".equals(userId) || "".equals(rechargeAmount) || "".equals(remaining) || "".equals(rechargeTime)) {
+    public boolean addRecharge(String userEmail, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime) {
+        if ("".equals(userEmail) || "".equals(rechargeAmount) || "".equals(remaining) || "".equals(rechargeTime)) {
             return false;
         } else {
-            Recharge recharge = new Recharge(userId, rechargeAmount, remaining, rechargeTime);
+            Recharge recharge = new Recharge(userEmail, rechargeAmount, remaining, rechargeTime);
             rechargeDao.insertRecharge(recharge);
             return true;
         }
@@ -47,8 +47,8 @@ public class RechargeServiceImpl implements RechargeService {
     }
 
     @Override
-    public List<Recharge> getRechargeByUserId(Integer userId) {
-        return rechargeDao.selectRechargeByUserId(userId);
+    public List<Recharge> getRechargeByUserId(String userEmail) {
+        return rechargeDao.selectRechargeByUserId(userEmail);
     }
 
     @Override

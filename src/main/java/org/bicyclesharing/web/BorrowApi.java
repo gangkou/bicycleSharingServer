@@ -36,10 +36,10 @@ public class BorrowApi {
     /**
      * 1.借车开始api,修改单车状况
      */
-    @RequestMapping(value = "api-borrow-borrowBicycle/{bicycleId}/{userName}")
+    @RequestMapping(value = "api-borrow-borrowBicycle/{bicycleId}/{useremail}")
     @ResponseBody
-    public String borrowBicycle(@PathVariable("bicycleId") Integer bicycleId, @PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
+    public String borrowBicycle(@PathVariable("bicycleId") Integer bicycleId, @PathVariable("useremail") String useremail) {
+        User user = userService.getUserByEmail(useremail);
         Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
         if (user == null || bicycle == null) {
             //-1表示找不到该车或者该用户不存在
@@ -48,7 +48,7 @@ public class BorrowApi {
             if (bicycle.getBicycleStatement() == 1 || bicycle.getBicycleStatement() == -1) {
                 if (user.getUserCash() == 199) {
                     //添加借车记录(车id,用户名,当前时间,开始地址)
-                    borrowService.addBorrow(bicycleId, userService.getUserByName(userName).getUserId(), new Date(), new Date(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), new BigDecimal(0), user.getUserAccount());
+                    borrowService.addBorrow(bicycleId, userService.getUserByEmail(useremail).getUserEmail(), new Date(), new Date(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), new BigDecimal(0), user.getUserAccount());
                     //修改单车状况
                     bicycle.setBicycleStatement(0);
                     bicycleService.editBicycyle(bicycleId, bicycle.getBicycleCurrentX(), bicycle.getBicycleCurrentY(), bicycle.getBicycleLastTime(), bicycle.getBicycleStatement());
@@ -67,12 +67,12 @@ public class BorrowApi {
      *
      * @return
      */
-    @RequestMapping(value = "api-borrow-returnBicycle/{bicycleId}/{userName}/{ex}/{ey}/{cost}/end")
+    @RequestMapping(value = "api-borrow-returnBicycle/{bicycleId}/{useremail}/{ex}/{ey}/{cost}/end")
     @ResponseBody
-    public String returnBicycle(@PathVariable("bicycleId") Integer bicycleId, @PathVariable("userName") String userName,
+    public String returnBicycle(@PathVariable("bicycleId") Integer bicycleId, @PathVariable("useremail") String useremail,
                                 @PathVariable("ex") double ex, @PathVariable("ey") double ey,
                                 @PathVariable("cost") double cost) {
-        User user = userService.getUserByName(userName);
+        User user = userService.getUserByEmail(useremail);
         if (user == null) {
             return "-1";//用户不存在
         } else {
@@ -81,7 +81,7 @@ public class BorrowApi {
             } else { //用户的余额减少
                 BigDecimal remaining = user.getUserAccount();
                 user.setUserAccount(remaining.subtract(new BigDecimal(cost)));
-                userService.editUser(user.getUserName(), user.getUserAccount(), user.getUserCredit(), user.getUserCash());
+                userService.editUser(user);
                 //完善租借记录
                 borrowService.editBorrow(bicycleId, new Date(), ex, ey, new BigDecimal(cost), remaining.subtract(new BigDecimal(cost)));
                 //修改车辆状况(最终归还时间地点)
@@ -95,10 +95,10 @@ public class BorrowApi {
     /**
      * 3.查询当前(最后一条)借车记录api
      */
-    @RequestMapping(value = "api-borrow-currentBorrow/{userName}")
+    @RequestMapping(value = "api-borrow-currentBorrow/{useremail}")
     @ResponseBody
-    public Borrow currentBorrow(@PathVariable("userName") String userName) {
-        ArrayList<Borrow> borrows = (ArrayList<Borrow>) borrowService.getBorrowByUserId(userService.getUserByName(userName).getUserId());
+    public Borrow currentBorrow(@PathVariable("useremail") String userName) {
+        ArrayList<Borrow> borrows = (ArrayList<Borrow>) borrowService.getBorrowByUserId(userService.getUserByEmail(userName).getUserEmail());
         if (borrows.size() >= 1) {
             return borrows.get(borrows.size() - 1);
         } else {return null;}

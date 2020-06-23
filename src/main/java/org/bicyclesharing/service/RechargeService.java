@@ -14,13 +14,13 @@ import java.util.List;
 public interface RechargeService {
     /**
      * 1.添加一条充值记录
-     * @param userId
+     * @param userEmail
      * @param rechargeAmount
      * @param remaining
      * @param rechargeTime
      * @return
      */
-    boolean addRecharge(Integer userId, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime);
+    boolean addRecharge(String userEmail, BigDecimal rechargeAmount, BigDecimal remaining, Date rechargeTime);
 
     /**
      * 2.删除一条充值记录
@@ -42,11 +42,11 @@ public interface RechargeService {
     Recharge getRechargeById(Integer id);
 
     /**
-     * 5.通过用户id查询充值记录
-     * @param userId
+     * 5.通过用户邮箱查询充值记录
+     * @param useremail
      * @return
      */
-    List<Recharge> getRechargeByUserId(Integer userId);
+    List<Recharge> getRechargeByUserId(String useremail);
 
     /**
      * 6.查询当天用户充值总额

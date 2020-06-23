@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -72,12 +73,13 @@ public class UserController {
 
     /**
      * 2.根据id删除用户执行
-     * @param id 用户id
+     * @param userEmail
      * @return user_list.jsp
      */
-    @RequestMapping(value="admin-admin-removeuser-execute/{id}",method=RequestMethod.GET)
-    public String removeUserExecute(@PathVariable Integer id){
-        userService.removeUser(id);
+    @RequestMapping(value="admin-admin-removeuser-execute/{userEmail}",method=RequestMethod.GET)
+    public String removeUserExecute(@PathVariable("userEmail") String userEmail){
+        userEmail =userEmail+".com";
+        userService.removeUser(userEmail);
         return "redirect:/admin-user-list-show?page=1";
     }
 
@@ -95,12 +97,31 @@ public class UserController {
 
     /**
      * 4.重置用户信用
-     * @param id
+     * @param userEmail
      * @return
      */
-    @RequestMapping(value="admin-user-resetcredit-execute/{id}", method=RequestMethod.GET)
-    public String resetCredit(@PathVariable("id") Integer id) {
-        userService.resetCredit(id);
+    @RequestMapping(value="admin-user-resetcredit-execute/{userEmail}", method=RequestMethod.GET)
+    public String resetCredit(@PathVariable("userEmail") String userEmail) {
+        userEmail =userEmail+".com";
+        userService.resetCredit(userEmail);
         return "redirect:/admin-user-list-show?page=1";
+    }
+
+    /**
+     * 退出登录
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "user-exit-execute", method = RequestMethod.GET)
+    public String exitExecute(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/user_login";
+    }
+
+    @RequestMapping("flush-user")
+    public String flushUser(@RequestParam("userEmail") String userEmail,HttpSession session){
+        User user=userService.getUserByEmail(userEmail);
+        session.setAttribute("user",user);
+        return  "user/user_show";
     }
 }

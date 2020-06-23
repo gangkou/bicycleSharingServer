@@ -8,9 +8,12 @@ import java.math.BigDecimal;
  * @date 2020/6/13
  **/
 public class User {
-    private Integer userId;
-    //用户名,手机号
+    //用户邮箱
+    private String userEmail;
+    //用户名
     private String userName;
+    //用户密码
+    private String userPassword;
     //余额
     private BigDecimal userAccount;
     //信用度
@@ -21,8 +24,8 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, String userName, BigDecimal userAccount, Integer userCredit, Integer userCash) {
-        this.userId = userId;
+    public User(String userEmail, String userName, BigDecimal userAccount, Integer userCredit, Integer userCash) {
+        this.userEmail = userEmail;
         this.userName = userName;
         this.userAccount = userAccount;
         this.userCredit = userCredit;
@@ -33,12 +36,12 @@ public class User {
         this.userName = userName;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserName() {
@@ -75,11 +78,20 @@ public class User {
         this.userCash = userCash;
     }
 
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "userEmail='" + userEmail + '\'' +
                 ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
                 ", userAccount=" + userAccount +
                 ", userCredit=" + userCredit +
                 ", userCash=" + userCash +

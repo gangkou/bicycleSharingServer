@@ -11,6 +11,7 @@
 <head>
     <title>修改账户信息</title>
     <%@include file="../common/head.jsp" %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body data-type="widgets">
@@ -33,7 +34,7 @@
                                 </div>
                             </div>
                             <div class="widget-body am-fr">
-                                <form autocomplete="off" class="am-form tpl-form-line-form" action="${pageContext.request.contextPath }/admin-index-edit-execute" method="post">
+                                <form autocomplete="off" class="am-form tpl-form-line-form" action="${pageContext.request.contextPath }/admin-index-edit-execute" enctype="multipart/form-data" method="post">
                                     <input type="hidden" name="id" value="${sessionScope.admin.adminId }">
                                     <div class="am-form-group">
                                         <label class="am-u-sm-3 am-form-label">管理员名 </label>
@@ -51,6 +52,12 @@
                                         <label class="am-u-sm-3 am-form-label">邮箱 </label>
                                         <div class="am-u-sm-9">
                                             <input type="email" class="tpl-form-input" name="email" value="${sessionScope.admin.adminEmail }">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label class="am-u-sm-3 am-form-label">更换头像 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="file" class="tpl-form-input" name="photo" value="">
                                         </div>
                                     </div>
                                     <div class="am-form-group">

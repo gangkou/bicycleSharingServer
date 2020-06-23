@@ -21,11 +21,11 @@ public class BorrowServiceImpl implements BorrowService {
     private BorrowDao borrowDao;
 
     @Override
-    public boolean addBorrow(Integer bicycleId, Integer userId, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
-        if ("".equals(bicycleId) || "".equals(userId) || "".equals(borrowStartTime) || "".equals(borrowEndTime) || "".equals(borrowStartX) || "".equals(borrowStartY) || "".equals(borrowEndX) || "".equals(borrowEndY) || "".equals(cost) || "".equals(remaining)) {
+    public boolean addBorrow(Integer bicycleId, String useremail, Date borrowStartTime, Date borrowEndTime, Double borrowStartX, Double borrowStartY, Double borrowEndX, Double borrowEndY, BigDecimal cost, BigDecimal remaining) {
+        if ("".equals(bicycleId) || "".equals(useremail) || "".equals(borrowStartTime) || "".equals(borrowEndTime) || "".equals(borrowStartX) || "".equals(borrowStartY) || "".equals(borrowEndX) || "".equals(borrowEndY) || "".equals(cost) || "".equals(remaining)) {
             return false;
         } else {
-            Borrow borrow = new Borrow(bicycleId, userId, borrowStartTime, borrowEndTime, borrowStartX, borrowStartY, borrowEndX, borrowEndY, cost, remaining);
+            Borrow borrow = new Borrow(bicycleId, useremail, borrowStartTime, borrowEndTime, borrowStartX, borrowStartY, borrowEndX, borrowEndY, cost, remaining);
             borrowDao.insertBorrow(borrow);
             return true;
         }
@@ -57,8 +57,8 @@ public class BorrowServiceImpl implements BorrowService {
     }
 
     @Override
-    public List<Borrow> getBorrowByUserId(Integer userId) {
-        return borrowDao.selectBorrowByUserId(userId);
+    public List<Borrow> getBorrowByUserId(String useremail) {
+        return borrowDao.selectBorrowByUserId(useremail);
     }
 
     @Override

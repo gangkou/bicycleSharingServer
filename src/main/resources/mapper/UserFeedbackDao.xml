@@ -3,8 +3,8 @@
 <mapper namespace="org.bicyclesharing.dao.UserFeedbackDao">
     <!--1.添加用户反馈-->
     <insert id="insertUserFeedback" parameterType="UserFeedback">
-        INSERT INTO user_feedback (feedback_id, feedback_title, feedback_content, user_id, bicycle_id, feedback_time, feedback_statement)
-        VALUES (#{feedbackId}, #{feedbackTitle}, #{feedbackContent}, #{userId}, #{bicycleId}, #{feedbackTime},
+        INSERT INTO user_feedback (feedback_id, feedback_title, feedback_content, user_email, bicycle_id, feedback_time, feedback_statement)
+        VALUES (#{feedbackId}, #{feedbackTitle}, #{feedbackContent}, #{userEmail}, #{bicycleId}, #{feedbackTime},
                 #{feedbackStatement})
     </insert>
     <!--2.删除用户反馈-->
@@ -24,10 +24,10 @@
         FROM user_feedback
         WHERE feedback_id = #{feedbackId}
     </select>
-    <select id="selectUserFeedbackByUserId" parameterType="Integer" resultType="UserFeedback">
+    <select id="selectUserFeedbackByUserId" parameterType="String" resultType="UserFeedback">
         SELECT *
         FROM user_feedback
-        WHERE user_id = #{userId}
+        WHERE user_email = #{userEmail}
     </select>
     <select id="selectUserFeedbackByBicycleId" parameterType="Integer" resultType="UserFeedback">
         SELECT *

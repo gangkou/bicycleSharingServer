@@ -65,4 +65,8 @@ public class RechargeController {
         return "recharge/recharge_list";
     }
 
+    @RequestMapping("user-recharge")
+    public String userRecharge(){
+        return "recharge/user_recharge";
+    }
 }

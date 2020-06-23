@@ -12,25 +12,24 @@ import java.util.List;
  **/
 public interface UserService {
     /**
-     * 1.用户登录(客户端验证码)
-     * @param username
+     * 1.用户登录
+     * @param useremail userpassword
      * @return
      */
-    boolean login(String username);
+    boolean login(String useremail,String userpassword);
 
     /**
-     * 2.根据用户名(手机号)获取信息
-     * @param username
+     * 2.根据用户邮箱获取信息
+     * @param useremail
      * @return
      */
-    User getUserByName(String username);
+    User getUserByEmail(String useremail);
 
     /**
-     * 3.用户注册(手机号)
-     * @param username
+     * 3.用户注册
      * @return
      */
-    boolean register(String username);
+    boolean register(String userEmail,String userName,String userPassword);
 
     /**
      * 4.获取所有用户
@@ -40,13 +39,13 @@ public interface UserService {
 
     /**
      * 5.删除某个用户
-     * @param id
+     * @param useremail
      * @return
      */
-    boolean removeUser(Integer id);
+    boolean removeUser(String useremail);
 
     /**
-     * 6.通过用户名模糊查询用户(手机号码段)
+     * 6.通过用户名模糊查询用户
      * @param username
      * @return
      */
@@ -54,13 +53,10 @@ public interface UserService {
 
     /**
      * 7.编辑用户信息
-     * @param userName
-     * @param userAccount
-     * @param userCredit
-     * @param userCash
+     * @param user
      * @return
      */
-    boolean editUser(String userName, BigDecimal userAccount, Integer userCredit, Integer userCash);
+    boolean editUser(User user);
 
     /**
      * 8.获取用户数量
@@ -70,18 +66,25 @@ public interface UserService {
 
     /**
      * 9.重置某个用户的信用
-     * @param userId
+     * @param useremail
      */
-    void resetCredit(Integer userId);
+    void resetCredit(String useremail);
 
     /**
      * 10.用户提交押金
-     * @param userId
+     * @param useremail
      */
-    void changeCashOne(Integer userId);
+    void changeCashOne(String useremail);
     /**
      * 11.用户撤回押金
-     * @param userId
+     * @param useremail
      */
-    void changeCashTwo(Integer userId);
+    void changeCashTwo(String useremail);
+
+    /**
+     * 12.用户充值
+     * @param user
+     * @return
+     */
+   boolean editUserAccouunt(User user);
 }

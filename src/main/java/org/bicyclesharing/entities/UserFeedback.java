@@ -11,7 +11,7 @@ public class UserFeedback {
     private Integer feedbackId;
     private String feedbackTitle;
     private String feedbackContent;
-    private Integer userId;
+    private String userEmail;
     private Integer bicycleId;
     private Date feedbackTime;
     private Integer feedbackStatement;
@@ -19,20 +19,20 @@ public class UserFeedback {
     public UserFeedback() {
     }
 
-    public UserFeedback(String feedbackTitle, String feedbackContent, Integer userId, Integer bicycleId, Date feedbackTime, Integer feedbackStatement) {
+    public UserFeedback(String feedbackTitle, String feedbackContent, String userEmail, Integer bicycleId, Date feedbackTime, Integer feedbackStatement) {
         this.feedbackTitle = feedbackTitle;
         this.feedbackContent = feedbackContent;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.bicycleId = bicycleId;
         this.feedbackTime = feedbackTime;
         this.feedbackStatement = feedbackStatement;
     }
 
-    public UserFeedback(Integer feedbackId, String feedbackTitle, String feedbackContent, Integer userId, Integer bicycleId, Date feedbackTime, Integer feedbackStatement) {
+    public UserFeedback(Integer feedbackId, String feedbackTitle, String feedbackContent, String userEmail, Integer bicycleId, Date feedbackTime, Integer feedbackStatement) {
         this.feedbackId = feedbackId;
         this.feedbackTitle = feedbackTitle;
         this.feedbackContent = feedbackContent;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.bicycleId = bicycleId;
         this.feedbackTime = feedbackTime;
         this.feedbackStatement = feedbackStatement;
@@ -62,12 +62,12 @@ public class UserFeedback {
         this.feedbackContent = feedbackContent;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public Integer getBicycleId() {
@@ -100,7 +100,7 @@ public class UserFeedback {
                 "feedbackId=" + feedbackId +
                 ", feedbackTitle='" + feedbackTitle + '\'' +
                 ", feedbackContent='" + feedbackContent + '\'' +
-                ", userId=" + userId +
+                ", userEmail=" + userEmail +
                 ", bicycleId=" + bicycleId +
                 ", feedbackTime=" + feedbackTime +
                 ", feedbackStatement=" + feedbackStatement +

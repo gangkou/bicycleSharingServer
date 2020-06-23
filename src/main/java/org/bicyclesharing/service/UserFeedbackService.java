@@ -19,7 +19,7 @@ public interface UserFeedbackService {
      */
     UserFeedback getFeedback(Integer feedbackId);
     List<UserFeedback> getFeedbackByBicycleId(Integer bicycleId);
-    List<UserFeedback> getFeedbackByUserId(Integer userId);
+    List<UserFeedback> getFeedbackByUserId(String userEmail);
     List<UserFeedback> getAllFeedback();
     /**
      * 3.反馈已读(修改状态为1)

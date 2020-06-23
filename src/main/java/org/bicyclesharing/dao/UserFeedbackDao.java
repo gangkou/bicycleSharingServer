@@ -36,7 +36,7 @@ public interface UserFeedbackDao {
      * @return
      */
     UserFeedback selectUserFeedbackById(Integer userFeedbackId);
-    List<UserFeedback> selectUserFeedbackByUserId(Integer userId);
+    List<UserFeedback> selectUserFeedbackByUserId(String userEmail);
     List<UserFeedback> selectUserFeedbackByBicycleId(Integer bicycleId);
     List<UserFeedback> selectAllUserFeedback();
 }

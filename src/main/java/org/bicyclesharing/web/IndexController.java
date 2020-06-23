@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -125,9 +128,11 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "admin-index-edit-execute", method = RequestMethod.POST)
-    public String editAdminExecute(@RequestParam("id") Integer id,
-                                   @RequestParam("name") String name, @RequestParam("password") String password,
-                                   @RequestParam("email") String email, HttpSession session) {
+    public String editAdminExecute(HttpServletRequest request,HttpSession session, MultipartFile photo) {
+        int id=Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String password=request.getParameter("password");
+        String email=request.getParameter("email");
         boolean editSuccess = adminService.editAdmin(id, name, password, email);
         Admin admin = adminService.getAdminById(id);
         session.setAttribute("admin", admin);
@@ -135,6 +140,18 @@ public class IndexController {
         if (!editSuccess) {
             view = "redirect:/admin-index-edit-show";
         }
+        if(photo!=null){
+            String path = "D:\\ideaproject\\javaEE_employee\\src\\main\\webapp\\resources\\adminPhoto";
+            String filename = photo.getOriginalFilename();
+            String newfilename = "admin"+id+".png";
+            File f = new File(path, newfilename);
+                try {
+                    photo.transferTo(f);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
         return view;
     }
 
@@ -147,7 +164,7 @@ public class IndexController {
     public String exitExecute(HttpSession session) {
         session.removeAttribute("admin");
         session.removeAttribute("advanced");
-        return "redirect:/admin-index-login-show";
+        return "redirect:/index_mtla";
     }
 
     /**
@@ -162,6 +179,11 @@ public class IndexController {
         AdminMessage adminMessage = adminService.getAdminMessageById(id);
         requestMap.put("adminMessage", adminMessage);
         return "index/index_message";
+    }
+
+    @RequestMapping("index_mtla")
+    public String indexmtla(){
+        return "index/index_mtla";
     }
 
 }

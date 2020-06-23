@@ -19,9 +19,9 @@ public interface UserDao {
     /**
      * 2.按id删除一个用户
      *
-     * @param userId
+     * @param userEmail
      */
-    void deleteUser(Integer userId);
+    void deleteUser(String userEmail);
 
     /**
      * 3.修改一个用户
@@ -56,10 +56,10 @@ public interface UserDao {
     /**
      * 7.根据id查询用户
      *
-     * @param userId
+     * @param userEmail
      * @return
      */
-    User selectUserById(Integer userId);
+    User selectUserById(String userEmail);
 
     /**
      * 8.计算用户数量

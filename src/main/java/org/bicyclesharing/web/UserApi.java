@@ -1,6 +1,7 @@
 package org.bicyclesharing.web;
 
 
+import org.bicyclesharing.entities.Admin;
 import org.bicyclesharing.entities.Borrow;
 import org.bicyclesharing.entities.Recharge;
 import org.bicyclesharing.entities.User;
@@ -11,12 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 用户相关
@@ -36,37 +40,44 @@ public class UserApi {
     /**
      * 1.用户登录接口
      *
-     * @param userName
+     * @param userEmail
+     * @param userPassword
      * @param session
      * @return
      */
 
-    @RequestMapping(value = "api-user-login/{userName}")
-    @ResponseBody
-    public User login(@PathVariable("userName") String userName, HttpSession session) {
-        boolean loginSuccess = userService.login(userName);
-        User user = null;
-        if (loginSuccess) {
-            user = userService.getUserByName(userName);
+    @RequestMapping(value = "api-user-login")
+    public String login(Map<String, Object> requestMap, HttpSession session,
+                      @RequestParam("userEmail") String userEmail, @RequestParam("userPassword") String userPassword) {
+        boolean loginSuccess = userService.login(userEmail, userPassword);
+        String view = "redirect:/user_show";
+        if (loginSuccess) { //登录成功
+            User user = userService.getUserByEmail(userEmail);
+            requestMap.put("user", user);
             session.setAttribute("user", user);
+        } else { //登录失败
+            requestMap.put("adminLoginError", "1");
+            view = "user/user_login";
         }
-        return user;
+        return view;
     }
 
     /**
      * 2.用户注册接口
-     *
-     * @param userName
-     * @return 1.注册成功 0.注册失败
+     * @return
      */
-    @RequestMapping(value = "api-user-register/{userName}")
-    @ResponseBody
-    public String register(@PathVariable("userName") String userName) {
-        boolean registerSuccess = userService.register(userName);
-        if (registerSuccess) {
-            return "1";
-        } else {
-            return "0";
+    @RequestMapping(value = "api-user-register")
+    public String register(@RequestParam("userEmail") String userEmail,@RequestParam("userPassword") String userPassword,@RequestParam("userName") String userName) {
+        if (userService.getUserByEmail(userEmail) != null) {
+            //邮箱已注册
+            return "user/user_register";
+        }else {
+            boolean registerSuccess = userService.register(userEmail,userName,userPassword);
+            if (registerSuccess) {
+                return "user/user_login";
+            } else {
+                return "user/user_register";
+            }
         }
     }
 
@@ -86,31 +97,31 @@ public class UserApi {
     /**
      * 4.用户租借记录api
      *
-     * @param userName
+     * @param userEmail
      * @return
      */
-    @RequestMapping(value = "api-user-queryBorrow/{userName}")
+    @RequestMapping(value = "api-user-queryBorrow/{userEmail}")
     @ResponseBody
-    public ArrayList<Borrow> getBorrowByUserId(@PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
-        ArrayList<Borrow> borrows = (ArrayList<Borrow>) borrowService.getBorrowByUserId(user.getUserId());
+    public ArrayList<Borrow> getBorrowByUserId(@PathVariable("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
+        ArrayList<Borrow> borrows = (ArrayList<Borrow>) borrowService.getBorrowByUserId(user.getUserEmail());
         return borrows;
     }
 
     /**
      * 6.用户查询充值记录api
      *
-     * @param userName
+     * @param userEmail
      * @return
      */
-    @RequestMapping(value = "api-user-queryRecharge/{userName}")
+    @RequestMapping(value = "api-user-queryRecharge/{userEmail}")
     @ResponseBody
-    public ArrayList<Recharge> getRechargeByUserId(@PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
+    public ArrayList<Recharge> getRechargeByUserId(@PathVariable("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
         if (user == null) {
             return null;
         } else {
-            ArrayList<Recharge> recharges = (ArrayList<Recharge>) rechargeService.getRechargeByUserId(user.getUserId());
+            ArrayList<Recharge> recharges = (ArrayList<Recharge>) rechargeService.getRechargeByUserId(user.getUserEmail());
             return recharges;
         }
 
@@ -119,101 +130,96 @@ public class UserApi {
     /**
      * 7.用户充值api,修改余额和充值记录
      */
-    @RequestMapping(value = "api-user-recharge/{rechargeAmount}/{userName}")
-    @ResponseBody
-    public String Recharge(@PathVariable("rechargeAmount") BigDecimal rechargeAmount, @PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
+    @RequestMapping(value = "api-user-recharge")
+
+    public String Recharge(HttpServletRequest request) {
+        String userEmail=request.getParameter("userEmail");
+        BigDecimal rechargeAmount=new BigDecimal(Integer.parseInt(request.getParameter("rechargeAmount")));
+        User user = userService.getUserByEmail(userEmail);
         if (user == null) {
-            return "-1";
+            return "user/user_login";
         } else {
             //修改用户余额
             user.setUserAccount(user.getUserAccount().add(rechargeAmount));
-            userService.editUser(user.getUserName(), user.getUserAccount(), user.getUserCredit(), user.getUserCash());
+            user.setUserCredit(user.getUserCredit()+(rechargeAmount.divide(new BigDecimal("10")).intValue()));
+            userService.editUserAccouunt(user);
             //记录充值记录
-            rechargeService.addRecharge(user.getUserId(), rechargeAmount, user.getUserAccount(), new Date());
-            return "1";
+            rechargeService.addRecharge(user.getUserEmail(), rechargeAmount, user.getUserAccount(), new Date());
+            String view="redirect:/flush-user?userEmail="+userEmail;
+            return view;
         }
     }
 
     /**
      * 8.用户信息api
      */
-    @RequestMapping(value = "api-user-userInfo/{userName}")
+    @RequestMapping(value = "api-user-userInfo/{userEmail}")
     @ResponseBody
-    public User getUserInfo(@PathVariable("userName") String userName) {
-        return userService.getUserByName(userName);
+    public User getUserInfo(@PathVariable("{userEmail}") String useremail,HttpSession session) {
+        session.setAttribute("user",userService.getUserByEmail(useremail));
+        return userService.getUserByEmail(useremail);
     }
 
     /**
      * 9.查看用户押金
      */
-    @RequestMapping(value = "api-user-getUserCash/{userName}")
-    @ResponseBody
-    public Integer getUserCash(@PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
-        if (user == null) {
-            return -1;
+    @RequestMapping(value = "api-user-UserCash")
+    public String getUserCash(HttpSession session) {
+        User usersession=(User) session.getAttribute("user");
+        if (usersession == null) {
+            return "0";
         } else {
-            return user.getUserCash();
+            if (usersession.getUserCash() == 0) {
+                String view="redirect:/api-user-submitUserCash?userEmail="+usersession.getUserEmail();
+                return view;
+            } else {
+                String view="redirect:/api-user-returnUserCash?userEmail="+usersession.getUserEmail();
+                return view;
+            }
         }
-
     }
 
     /**
      * 10.用户提交押金
      */
-    @RequestMapping(value = "api-user-submitUserCash/{userName}")
-    @ResponseBody
-    public String submitUserCash(@PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
-        if (user == null) {
-            return "-1";
+    @RequestMapping(value = "api-user-submitUserCash")
+    public String submitUserCash(HttpServletRequest request) {
+        String useremail=request.getParameter("userEmail");
+        User user = userService.getUserByEmail(useremail);
+        if (user.getUserAccount().compareTo(new BigDecimal(199)) == -1) {
+            return "redirect:/user_recharge";
         } else {
-            if (user.getUserCash() == 0) {
-                user.setUserCash(199);
-                userService.editUser(user.getUserName(), user.getUserAccount(), user.getUserCredit(), user.getUserCash());
-                return "1";
-            } else {
-                return "0";
-            }
+            userService.changeCashOne(user.getUserEmail());
+            String view="redirect:/flush-user?userEmail="+useremail;
+            return view;
         }
     }
+
 
     /**
      * 11.用户退押金
      */
-    @RequestMapping(value = "api-user-returnUserCash/{userName}")
-    @ResponseBody
-    public String returnUserCash(@PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
-        if (user == null) {
-            return "-1";
-        } else {
-            if (user.getUserCash() == 199) {
-                user.setUserCash(0);
-                userService.editUser(user.getUserName(), user.getUserAccount(), user.getUserCredit(), user.getUserCash());
-                return "1";
-            } else {
-                return "0";
-            }
-        }
+    @RequestMapping(value = "api-user-returnUserCash")
+    public String returnUserCash(HttpServletRequest request) {
+        String useremail=request.getParameter("userEmail");
+        User user = userService.getUserByEmail(useremail);
+        userService.changeCashTwo(useremail);
+        String view="redirect:/flush-user?userEmail="+useremail;
+        return view;
     }
 
-    /**
-     * 12.修改用户信用的api
-     * @param x
-     * @param userName
-     * @return
-     */
-    @RequestMapping(value = "api-user-changeUserCredit/{x}/{userName}")
-    @ResponseBody
-    public String changeUserCredit(@PathVariable("x") Integer x, @PathVariable("userName") String userName) {
-        User user = userService.getUserByName(userName);
-        if (user == null) {
-            return "-1";
-        } else {
-            userService.editUser(user.getUserName(), user.getUserAccount(), user.getUserCredit(), user.getUserCash());
-            return "1";
-        }
+    @RequestMapping("user_login")
+    public String userLogin(){
+     return "user/user_login";
+    }
+
+    @RequestMapping("user_show")
+    public String userShow(){
+        return "user/user_show";
+    }
+
+    @RequestMapping("user_register")
+    public String userRegister(){
+        return "user/user_register";
     }
 }

@@ -53,7 +53,7 @@
                                     <c:forEach items="${requestScope.pageRecharges}" var="recharges">
                                         <tr class="gradeX">
                                             <td class="am-text-middle">${recharges.rechargeId }</td>
-                                            <td class="am-text-middle">${recharges.userId }</td>
+                                            <td class="am-text-middle">${recharges.userEmail}</td>
                                             <td class="am-text-middle">${recharges.rechargeAmount}</td>
                                             <td class="am-text-middle">${recharges.remaining}</td>
                                             <td class="am-text-middle">

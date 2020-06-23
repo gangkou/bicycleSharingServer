@@ -10,7 +10,7 @@
 <header>
     <!-- logo -->
     <div class="am-fl tpl-header-logo">
-        <img src="${pageContext.request.contextPath }/resources/assets/img/index-logo.png" style="width:30px; height: 30px; float: left; margin-top:14px; margin-left: 15px;">
+        <div style="color: #cfcfcf; line-height: 57px; margin-left:5px; font-weight:bold; float: left;"><a href="/index_mtla" ><img src="${pageContext.request.contextPath }/resources/assets/img/index-logo.png"  style="width:30px; height: 30px; float: left; margin-top:14px; margin-left: 15px;"></a></div>
        	<div style="color: #cfcfcf; line-height: 57px; margin-left:5px; font-weight:bold; float: left;">MtLa单车后台管理</div>
     </div>
     <!-- 右侧内容 -->
@@ -30,7 +30,7 @@
                 </li>
                 <!-- 退出 -->
                 <li class="am-text-sm">
-                    <a href="${pageContext.request.contextPath }/admin-index-exit-execute">
+                    <a href="${pageContext.request.contextPath }/admin-index-login-show">
                         <span class="am-icon-sign-out"></span> 退出
                     </a>
                 </li>
