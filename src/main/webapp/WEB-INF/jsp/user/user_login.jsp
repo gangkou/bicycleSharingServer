@@ -124,5 +124,7 @@ if(reset!=null){
   }
     session.removeAttribute("adminregister");
     %>
+
+	<script src="js2/alertcustom.js"></script>
 </body>
 </html>

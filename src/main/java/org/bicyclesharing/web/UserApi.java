@@ -222,4 +222,9 @@ public class UserApi {
     public String userRegister(){
         return "user/user_register";
     }
+
+    @RequestMapping("user_riding")
+    public String userRiding(){
+        return "user/user_riding";
+    }
 }

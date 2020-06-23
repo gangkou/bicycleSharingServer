@@ -133,6 +133,8 @@
 
 </script>
 
+<script src="js2/alertcustom.js"></script>
+
 </body>
 
 </html>

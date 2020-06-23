@@ -66,29 +66,35 @@
                             <div class="row">
                                       <div style="width:200px; height:10px;">
                                       </div>
-
-                                      <div style="width:100px; height:20px;">
-                                      </div>
-
                                           <div class="buttons wthree mt-4">
-                                              <form action="/user_login" method="post" id="bicycleform">
-                                                  车辆编号:<input type="text" name="bicycleId">
-                                                   <a  id="borrowbicycle" class="button1" href="#" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button" onclick="document.getElementById('bicycleform').submit();return false" > 租车/还车</a>
-                                              </form>
+                                              <%--<form action="judge-borrow-or-return" method="post" id="bicycleform">--%>
+                                                  <%--<a class="nav-link" >车辆编号</a>&nbsp;<input type="number" min="1" max="999999999" name="bicycleId">--%>
+                                                  <%--&nbsp;&nbsp;--%>
+                                                  <script>
+                                                      var currentx=sessionStorage.getItem("currentx");
+                                                      var currenty=sessionStorage.getItem("currenty");
+                                                      <%--$("#borrowbicycle").attr("href","${pageContext.request.contextPath}/api-bicycleid-queryByLocation/"+currentx+",/"+currenty);--%>
+                                                      function transferValue()
+                                                      {
+                                                          newURL="api-bicycleid-queryByLocation?currentx="+currentx+"&currenty="+currenty;
+                                                          window.open(newURL);
+                                                      }
+                                                  </script>
+                                                   <a  id="borrowbicycle" class="button1"  href="#" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button" onclick="transferValue()"> 租车/还车</a>
+                                              <%--</form>--%>
                                           </div>
-
-
-                                  <div style="width:140px; height:20px;">
-                                       </div>
-                                  <div style="width:140px; height:20px;">
-                                       </div>
-                                  <div style="width:140px; height:20px;">
-                                       </div>
-                                         <div class="buttons wthree mt-4">
-                                         <a class="button1" href="https://m.amap.com/navi/?start=113.475522,34.144945&dest=113.474479,34.156735&destName=%E7%9B%AE%E7%9A%84%E5%9C%B0%EF%BC%9A%E4%BA%9A%E7%BB%86%E4%BA%9A&naviBy=walk&key=2e8706b34a94fb7b6cc4273dfd1c0899" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button">骑行导航</a>
-                                         </div>
+                                <div style="width:200px; height:10px;">
+                                </div>
+                                <div style="width:200px; height:10px;">
+                                    <p class="text-black-50">请先在地图上点击目的地后<br>------再次点击相关功能------</p>
+                                </div>
+                                <div style="width:200px; height:10px;">
+                                </div>
+                                <div class="buttons wthree mt-4">
+                                        <a  id="aimplace" class="button1" href="/user_riding" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button"  > 骑行导航</a>
+                                </div>
                                    <div style="width:100px; height:20px;">
-                                      </div>                               
+                                      </div>
 
                   </div>                  
                  <!-- //about -->
@@ -140,7 +146,7 @@
       <!-- //main -->
               
     <script src="js2/SmoothScroll.min.js"></script>
-  
+    <script src="js2/alertcustom.js"></script>
     <script src="js2/bootstrap.min.js"></script>
     <%
      String chargecash=(String)session.getAttribute("chargecash");
@@ -165,6 +171,8 @@
         }
             session.removeAttribute("goacc");
     %>
+
+
 </body>
 
 </html>

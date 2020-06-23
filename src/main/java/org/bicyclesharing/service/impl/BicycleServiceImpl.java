@@ -107,7 +107,8 @@ public class BicycleServiceImpl implements BicycleService {
         List<Bicycle> bicycleList= bicycleDao.selectBicycleByStatement(bicycleStatement);
         Double[] dx=new Double[bicycleList.size()];
         for (int i = 0; i < bicycleList.size(); i++) {
-            dx[i]=bicycleList.get(i).getBicycleCurrentX();//逐个获取经度
+            //逐个获取经度
+            dx[i]=bicycleList.get(i).getBicycleCurrentX();
         }
         return dx;
     }
@@ -117,8 +118,28 @@ public class BicycleServiceImpl implements BicycleService {
         List<Bicycle> bicycleList= bicycleDao.selectBicycleByStatement(bicycleStatement);
         Double[] dy=new Double[bicycleList.size()];
         for (int i = 0; i < bicycleList.size(); i++) {
-            dy[i]=bicycleList.get(i).getBicycleCurrentY();//逐个获取纬度
+            //逐个获取纬度
+            dy[i]=bicycleList.get(i).getBicycleCurrentY();
         }
         return dy;
     }
+
+//    /**
+//     * 对获取到的单车列表按id号进行排序  解决在地图上的标识问题
+//     * @param bicycleList
+//     * @return
+//     */
+//    public List<Bicycle> arrayBicycleList(List<Bicycle> bicycleList){
+//        Bicycle bicycle=new Bicycle();
+//        for(int x=0;x<bicycleList.size();x++) {
+//            for (int y = 0; y < bicycleList.size() - x; y++) {
+//                if(bicycleList.get(y).getBicycleId()>bicycleList.get(y+1).getBicycleId()){
+//                    bicycle=bicycleList.get(y);
+//                    bicycleList.set(y,bicycleList.get(y+1));
+//                    bicycleList.set(y+1,bicycle);
+//                }
+//            }
+//        }
+//        return bicycleList;
+//    }
 }

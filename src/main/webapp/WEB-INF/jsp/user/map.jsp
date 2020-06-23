@@ -12,15 +12,18 @@
 	<!---->
 </head>
 <body style="overflow:hidden">
+
+
+
 	<div id="wrap" class="my-map">
 		<div id="mapContainer"></div>
 	</div>
 	<script src="//webapi.amap.com/maps?v=1.3&key=8325164e247e15eea68b59e89200988b"></script>
+
 	<div class="row am-cf">
 		<div class="am-u-sm-12 am-u-md-12">
 			<div class="widget am-cf">
 				<div id="container" style="width: auto;height: 500px;">
-
 
 					<script>
 
@@ -28,49 +31,51 @@
 							resizeEnable: true,
 							zoom: 20,
 						});
-						AMap.plugin('AMap.Geolocation', function() {
-							var geolocation = new AMap.Geolocation({
+						map.plugin('AMap.Geolocation', function () {
+							geolocation = new AMap.Geolocation({
 								enableHighAccuracy: true,//是否使用高精度定位，默认:true
-								timeout: 10000,          //超过10秒后停止定位，默认：5s
-								buttonPosition:'RB',    //定位按钮的停靠位置
+								timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+								maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+								convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+								showButton: true,        //显示定位按钮，默认：true
+								buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
 								buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-								zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
-
+								showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+								showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+								panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+								zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
 							});
 							map.addControl(geolocation);
-							geolocation.getCurrentPosition(function(status,result){
-								if(status=='complete'){
-									onComplete(result)
-								}else{
-									onError(result)
-								}
-							});
+							geolocation.getCurrentPosition();
+							AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+							AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
 						});
 						//解析定位结果
 						function onComplete(data) {
-							document.getElementById('status').innerHTML='定位成功'
+							if(data.status == 1){
+								console.log("定位成功");
+								$("#addressInput").val(data.formattedAddress);
+								sessionStorage.setItem("dingWei-lng",data.position.getLng());
+								sessionStorage.setItem("dingWei-lat",data.position.getLat());
+							}
 							var str = [];
-							str.push('定位结果：' + data.position);
-							str.push('定位类别：' + data.location_type);
-							if(data.accuracy){
-								str.push('精度：' + data.accuracy + ' 米');
-							}//如为IP精确定位结果则没有精度信息
+							str.push('经度：' + data.position.getLng());
+							str.push('纬度：' + data.position.getLat());
 							str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-
-							document.getElementById('result').innerHTML = str.join('<br>');
+							console.log(str.join('<br>'));
 						}
-						//解析定位错误信息
-						function onError(data) {
-							document.getElementById('status').innerHTML='定位失败'
-							document.getElementById('result').innerHTML = '失败原因排查信息:'+data.message;
+						//解析错误信息
+						function onError() {
+							var str = [];
+							str.push('定位失败');
+							console.log(str.join('<br>'));
 						}
-
 						// map.center=[data.position.getLng(),data.position().getLat()]  已默认显示所在位置
 
 						/**
 						 * 一个坑 目前 由于Chrome、IOS10等已不再支持非安全域的浏览器定位请求，
 						 * 为保证定位成功率和精度，请尽快升级您的站点到HTTPS。
-						 * 伤心....   定位效果很差
+						 * 伤心....   定位效果很差 且无法获取位置经纬度
 						 */
 						// 请求地址
 
@@ -78,6 +83,7 @@
 						var greenX = url + 'api-bicycle-getX/1';
 						var greenY = url + 'api-bicycle-getY/1';
 						// 保存数据的变量
+
 						var greenBicycleCurrentX, greenBicycleCurrentY;
 						Ajax(greenX, function (res) {
 							greenBicycleCurrentX = JSON.parse(res);
@@ -101,7 +107,7 @@
 									position: [greenBicycleCurrentX[i], greenBicycleCurrentY[i]]
 								});
 								marker[i].setMap(map);
-								marker[i].setTitle(" "+i);
+								marker[i].setTitle(" "+(i+1));
 							}
 						}
 
@@ -117,11 +123,28 @@
 								}
 							}
 						}
+
+						var clickEventListener = map.on('click', function(e) {
+							sessionStorage.setItem("currentx",e.lnglat.getLng());
+							sessionStorage.setItem("currenty",e.lnglat.getLat());
+							alert("-------------------目标经纬度-------------------经度:"+e.lnglat.getLng() + ",纬度:" + e.lnglat.getLat());
+						});
+						var auto = new AMap.Autocomplete({
+							input: "tipinput"
+						});
+						AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+						function select(e) {
+							if (e.poi && e.poi.location) {
+								map.setZoom(15);
+								map.setCenter(e.poi.location);
+							}
+						}
 					</script>
 				</div>
 			</div>
 		</div>
-	</div>
 
+	</div>
+	<script src="js2/alertcustom.js"></script>
 </body>
 </html>

@@ -92,5 +92,7 @@
     session.removeAttribute("forgot");
     
     %>
+
+	<script src="js2/alertcustom.js"></script>
 </body>
 </html>
