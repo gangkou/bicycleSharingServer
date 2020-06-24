@@ -14,7 +14,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.spri
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
+    <!--文件上传配置-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="104857600"/>
         <property name="maxInMemorySize" value="4096" />
@@ -43,6 +43,14 @@ http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.spri
             <mvc:exclude-mapping path="/admin-admin-password-show"/>
             <mvc:exclude-mapping path="/admin-admin-password-execute"/>
             <bean class="org.bicyclesharing.interceptor.AdvancedOperationsInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--配置用户登录验证拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user_show"/>
+            <bean class="org.bicyclesharing.interceptor.UserLoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

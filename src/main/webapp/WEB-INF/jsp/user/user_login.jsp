@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -47,6 +47,10 @@
 									</label>
 								</div>
 
+								<c:if test="${requestScope.userLoginError == 1 }">
+									<span style="color:#f44336;">用户名或密码输入有误!请检查后重新输入</span>
+								</c:if>
+
 								<div class="form-group no-margin">
 									<button type="submit" class="btn btn-primary btn-block">
 										登录
@@ -72,59 +76,29 @@
 
 	<script src="js/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js2/alertcustom.js"></script>
 	<script src="js/my-login.js"></script>
 	
 	<%
-     String log=(String)session.getAttribute("log");
-     String ss=(String)session.getAttribute("ss");
-     String reset=(String)session.getAttribute("reset");
-     String reg=(String)session.getAttribute("reg");
-     String adminregister=(String)session.getAttribute("adminregister");
-    
-    if(ss!=null){
+     String usernotlogin=(String)session.getAttribute("usernotlogin");
+     String log=(String)session.getAttribute("ss");
+
+    if(usernotlogin!=null){
     %>
     <script type="text/javascript">
-      alert("<%=ss%>");
+      alert("<%=usernotlogin%>");
     </script>
 <%
-
 }
     session.removeAttribute("ss");
-if(reset!=null){
-   	 %>
-   	    <script type="text/javascript">
-   	      alert("<%=reset%>");
-   	    </script>
-   	<%	
-   }
-   session.removeAttribute("reset");
- if(reg!=null){
-    %>
-    <script type="text/javascript">
-      alert("<%=reg%>");
-    </script>
-<%
-}
-    session.removeAttribute("reg");
  if(log!=null){
         %>
         <script type="text/javascript">
           alert("<%=log%>");
         </script>
     <%
-
     }
    session.removeAttribute("log");
-   if(adminregister!=null){
-    %>
-    <script type="text/javascript">
-      alert("<%=adminregister%>");
-    </script>
-  <%
-  }
-    session.removeAttribute("adminregister");
-    %>
-
-	<script src="js2/alertcustom.js"></script>
+  %>
 </body>
 </html>

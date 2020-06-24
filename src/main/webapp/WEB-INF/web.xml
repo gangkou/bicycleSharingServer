@@ -29,6 +29,11 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!--用户重复登录监听-->
+  <listener>
+    <listener-class>org.bicyclesharing.listener.listenerone</listener-class>
+  </listener>
+
   <!--配置DispatcherServlet-->
   <servlet>
     <servlet-name>bicycleSharing-dispatcher</servlet-name>
@@ -43,6 +48,7 @@
     <servlet-name>bicycleSharing-dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
     <!--配置错误信息 写代码时最好注释掉 以显示错误-->
   <!--<error-page>-->
     <!--<error-code>404</error-code>-->

@@ -40,7 +40,7 @@ public class BorrowApi {
          String useremail=user.getUserEmail();
          int bicycleId=Integer.parseInt( request.getParameter("bicycleId"));
          Bicycle bicycle=bicycleService.getBicycleById(bicycleId);
-         if(request.getSession().getAttribute("bicyclestart")==null||request.getSession().getAttribute("bicyclestart").equals("")){
+         if(request.getSession().getAttribute("bicyclestart")!=null){
              String view="redirect:/api-borrow-returnBicycle/"+bicycleId+"/"+useremail+"/"+113.824262+"/"+34.022008+"/"+2;
              return view;
          }else {
@@ -94,7 +94,7 @@ public class BorrowApi {
     @RequestMapping(value = "api-borrow-returnBicycle/{bicycleId}/{useremail}/{ex}/{ey}/{cost}")
     public String returnBicycle(@PathVariable("bicycleId") Integer bicycleId, @PathVariable("useremail") String useremail,
                                 @PathVariable("ex") double ex, @PathVariable("ey") double ey,
-                                @PathVariable("cost") double cost) {
+                                @PathVariable("cost") double cost,HttpSession session) {
         User user = userService.getUserByEmail(useremail);
         if (user == null) {
             return "-1";//用户不存在
@@ -109,6 +109,8 @@ public class BorrowApi {
                 borrowService.editBorrow(bicycleId, new Date(), ex, ey, new BigDecimal(cost), remaining.subtract(new BigDecimal(cost)));
                 //修改车辆状况(最终归还时间地点)
                 bicycleService.editBicycyle(bicycleId, ex, ey, new Date(), 1);
+
+                session.removeAttribute("bicyclestart");
                 String view="redirect:/flush-user?userEmail="+useremail;
                 return view;
             }

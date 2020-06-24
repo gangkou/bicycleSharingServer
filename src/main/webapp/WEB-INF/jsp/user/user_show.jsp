@@ -149,27 +149,26 @@
     <script src="js2/alertcustom.js"></script>
     <script src="js2/bootstrap.min.js"></script>
     <%
-     String chargecash=(String)session.getAttribute("chargecash");
-    
-     String goacc=(String)session.getAttribute("goacc");
-    if(chargecash!=null){
+     String rechargeresult=(String)session.getAttribute("rechargeresult");
+     String changecash=(String)session.getAttribute("changecash");
+
+    if(rechargeresult!=null){
     %>
     <script type="text/javascript">
-      alert("<%=chargecash%>");
+      alert("<%=rechargeresult%>");
     </script>
 <%
 }
-    session.removeAttribute("chargecash");
+    session.removeAttribute("rechargeresult");
     
-        if(goacc!=null){
+        if(changecash!=null){
             %>
             <script type="text/javascript">
-              alert("<%=goacc%>");
+              alert("<%=changecash%>");
             </script>
         <%
-
         }
-            session.removeAttribute("goacc");
+            session.removeAttribute("changecash");
     %>
 
 

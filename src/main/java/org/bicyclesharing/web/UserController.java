@@ -114,7 +114,7 @@ public class UserController {
      */
     @RequestMapping(value = "user-exit-execute", method = RequestMethod.GET)
     public String exitExecute(HttpSession session) {
-        session.removeAttribute("user");
+        session.invalidate();
         return "redirect:/user_login";
     }
 

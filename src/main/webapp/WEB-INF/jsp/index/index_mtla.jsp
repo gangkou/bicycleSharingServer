@@ -337,26 +337,26 @@
                     <div class="container">
                   
                    
-                        <form role="form" action="userfeedback" method="post">
+                        <form role="form" action="admin-userFeedback-removeuser-execute" method="post">
                             <div class="row">
                             <div class="col-md-6 wow bounceInLeft">
                                 
                                     <div class="form-group">
-                                        <input type="text" placeholder="用户名" class="form-control input-lg" name="name">
+                                        <input type="text" placeholder="主题" class="form-control input-lg" name="feedbackTitle">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="电子邮箱" class="form-control input-lg" name="email">
+                                        <input type="text" placeholder="您的邮箱" class="form-control input-lg" name="userEmail">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="主题" class="form-control input-lg" name="subject">
+                                        <input type="text" placeholder="车辆编号" class="form-control input-lg" name="bicycleId">
                                     </div>
                                 
                             </div>
                             <div class="col-md-6 wow bounceInRight">
                                <div class="form-group">
-                                <textarea placeholder="填写信息" class="form-control " name="feedback"></textarea>
+                                <textarea placeholder="填写信息" class="form-control " name="feedbackContent"></textarea>
                                </div>
-                               <button class="btn btn-primary btn-block input-lg">发送反馈</button>
+                               <button type="submit" class="btn btn-primary btn-block input-lg">发送反馈</button>
                             </div>
                         </div>
                         </form>

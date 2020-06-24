@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -89,5 +91,20 @@ public class UserFeedbackController {
             userFeedbackService.removeFeedback(feedbackId);
         }
         return "redirect:/admin-feedback-list-show?page=1";
+    }
+
+    @RequestMapping(value = "admin-userFeedback-removeuser-execute",method = RequestMethod.POST)
+    public String addUserFeedbackExecute(UserFeedback feedback, HttpSession session){
+        feedback.setFeedbackTime(new Date());
+        feedback.setFeedbackStatement(0);
+        boolean flag=userFeedbackService.addFeedback(feedback);
+        if(flag){
+            session.setAttribute("feedbackresult","我们已接受到您的反馈意见,十分感谢!");
+            return "/index/index_mtla";
+        }else {
+            session.setAttribute("feedbackresult","提交失败,请重试!");
+            return "/index/index_mtla";
+        }
+
     }
 }

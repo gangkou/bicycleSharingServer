@@ -52,16 +52,6 @@
 	</section>
 	<%  
 	String chargecash=(String)session.getAttribute("chargecash");
-	String goacc=(String)session.getAttribute("goacc");
-	if(goacc!=null){
-        %>
-        <script type="text/javascript">
-          alert("<%=goacc%>");
-        </script>
-    <%
-
-    }
-        session.removeAttribute("goacc");
         if(chargecash!=null){
             %>
             <script type="text/javascript">
