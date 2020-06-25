@@ -47,11 +47,11 @@ public class MailUtil {
         try {
             msg.setSubject("MtLa验证邮件,欢迎加入MtLa!");
             //设置发件人
-            msg.setFrom(new InternetAddress("1593554685@qq.com"));
+            msg.setFrom(new InternetAddress("发件人qq.com"));
 
             transport = session.getTransport();
             //设置发件人在该邮箱主机上的用户名密码
-            transport.connect("1593554685@qq.com", "jtqtngootoxqiich");
+            transport.connect("邮箱服务器名", "邮箱授权码");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
