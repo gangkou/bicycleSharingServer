@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="author" content="Kodinger">
-	<title>充值中心 &mdash; 摩托轮拉</title>
+	<title>Forgot password&mdash; 摩托轮拉</title>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/my-login.css">
 </head>
@@ -20,47 +20,47 @@
 					</div>
 					<div class="card fat">
 						<div class="card-body">
-							<h4 class="card-title"><fmt:message key="rechargecenter" /></h4>
-							<form method="POST" action="api-user-recharge">
-							  <input type="hidden" name="userEmail" value="${sessionScope.user.userEmail}">
+							<h4 class="card-title"><fmt:message key="forgotpassword"/> </h4>
+							<form method="POST" action="sendIdCode.action.forgot">
+							 
 								<div class="form-group">
-									<label for="account"><fmt:message key="rechargeaccount" />：</label>
-									<input id="account" type="number" max="100000" min="1" class="form-control" name="rechargeAmount" value="" required autofocus>
+									<label for="email"><fmt:message key="email"/></label>
+									<input id="email" type="email" class="form-control" name="mail" value="" required autofocus>
 									<div class="form-text text-muted">
-										
+										<fmt:message key="forgotshow"/>
 									</div>
 								</div>
 
 								<div class="form-group no-margin">
 									<button type="submit" class="btn btn-primary btn-block">
-										<fmt:message key="recharge" />
+										<fmt:message key="resetpwd"/>
 									</button>
 								</div>
 								
 							</form>
 							<div class="margin-top20 text-center">
-									 <a href="/index_mtla"><fmt:message key="returnindex" /></a>
+									 <a href="/index_mtla"><fmt:message key="returnindex"/></a>
 							</div>
 						</div>
 					</div>
 					<div class="footer">
-						Copyright &copy; <fmt:message key="copyright" />  2020-6-13
+						Copyright &copy; <fmt:message key="copyright"/>  2020-4-9
 						<br> Learned it from Teacher Chen
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<%  
-	String chargecash=(String)session.getAttribute("chargecash");
-        if(chargecash!=null){
-            %>
-            <script type="text/javascript">
-              alert("<%=chargecash%>");
-            </script>
-        <%
-        }
-            session.removeAttribute("chargecash");
+	<%
+	String forgotcode=(String)session.getAttribute("forgotcode");
+	if(forgotcode!=null){
+	%>
+	<script type="text/javascript">
+		alert("<%=forgotcode%>");
+	</script>
+<%
+		}
+		session.removeAttribute("forgotcode");
 	%>
 </body>
 </html>

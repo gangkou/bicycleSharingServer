@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 
@@ -46,15 +47,15 @@
                     </h1>
                 </div>
                 <ul class="nav nav-pills flex-column mt-lg-5">
-                    <li class="nav-item"><a class="nav-link active" >用户名：${sessionScope.user.userName}</a></li>
-                    <li class="nav-item"><a class="nav-link" >电子邮箱：${sessionScope.user.userEmail}</a></li>
-                    <li class="nav-item"><a class="nav-link" >账户余额：${sessionScope.user.userAccount}</a><a href="user-recharge" class="nav-link active" >充值</a></li>
-                    <li class="nav-item"><a class="nav-link" >信誉度：${sessionScope.user.userCredit}</a></li>
-                    <li class="nav-item"><a class="nav-link">押金：${sessionScope.user.userCash}</a><a href="${pageContext.request.contextPath}/api-user-UserCash" class="nav-link active" >提交/退回押金</a></li>
+                    <li class="nav-item"><a class="nav-link active" ><fmt:message key="username" />:${sessionScope.user.userName}</a></li>
+                    <li class="nav-item"><a class="nav-link" ><fmt:message key="email" />：${sessionScope.user.userEmail}</a></li>
+                    <li class="nav-item"><a class="nav-link" ><fmt:message key="account" />：${sessionScope.user.userAccount}</a><a href="user-recharge" class="nav-link active" ><fmt:message key="recharge" /></a></li>
+                    <li class="nav-item"><a class="nav-link" ><fmt:message key="credit" />：${sessionScope.user.userCredit}</a></li>
+                    <li class="nav-item"><a class="nav-link"><fmt:message key="cash" />：${sessionScope.user.userCash}</a><a href="${pageContext.request.contextPath}/api-user-UserCash" class="nav-link active" ><fmt:message key="changecash" /></a></li>
                 </ul>
                 <a href="user-exit-execute"><button type="button" class="btn btn-block mt-lg-5 mt-3 w3ls-btn p-1 btn-theme text-white  text-uppercase font-weight-bold"
                     data-toggle="modal" aria-pressed="false" data-target="#exampleModal1" >
-                              退出登录
+                    <fmt:message key="loginout" />
                 </button>
                 </a>
             </div>   
@@ -67,31 +68,30 @@
                                       <div style="width:200px; height:10px;">
                                       </div>
                                           <div class="buttons wthree mt-4">
-                                              <%--<form action="judge-borrow-or-return" method="post" id="bicycleform">--%>
-                                                  <%--<a class="nav-link" >车辆编号</a>&nbsp;<input type="number" min="1" max="999999999" name="bicycleId">--%>
-                                                  <%--&nbsp;&nbsp;--%>
+
                                                   <script>
-                                                      var currentx=sessionStorage.getItem("currentx");
-                                                      var currenty=sessionStorage.getItem("currenty");
+
                                                       <%--$("#borrowbicycle").attr("href","${pageContext.request.contextPath}/api-bicycleid-queryByLocation/"+currentx+",/"+currenty);--%>
                                                       function transferValue()
-                                                      {
+
+                                                      {   var currentx=sessionStorage.getItem("currentx");
+                                                          var currenty=sessionStorage.getItem("currenty");
                                                           newURL="api-bicycleid-queryByLocation?currentx="+currentx+"&currenty="+currenty;
                                                           window.open(newURL);
                                                       }
                                                   </script>
-                                                   <a  id="borrowbicycle" class="button1"  href="#" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button" onclick="transferValue()"> 租车/还车</a>
+                                                   <a  id="borrowbicycle" class="button1"  href="#" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button" onclick="transferValue()"> <fmt:message key="brrow" /></a>
                                               <%--</form>--%>
                                           </div>
                                 <div style="width:200px; height:10px;">
                                 </div>
                                 <div style="width:200px; height:10px;">
-                                    <p class="text-black-50">请先在地图上点击目的地后<br>------再次点击相关功能------</p>
+                                    <p class="text-black-50"><fmt:message key="tips" /></p>
                                 </div>
                                 <div style="width:200px; height:10px;">
                                 </div>
                                 <div class="buttons wthree mt-4">
-                                        <a  id="aimplace" class="button1" href="/user_riding" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button"  > 骑行导航</a>
+                                        <a  id="aimplace" class="button1" href="/user_riding" data-toggle="modal" aria-pressed="false" data-target="#exampleModal" role="button"  > <fmt:message key="riding" /></a>
                                 </div>
                                    <div style="width:100px; height:20px;">
                                       </div>
@@ -108,7 +108,7 @@
                  <!-- footer -->
                  <div class="footer-bottom py-lg-5 py-3">
                             <div class="footerv2-w3ls  text-center">
-                                <h6 class="w3f_title">关注我们</h6>
+                                <h6 class="w3f_title"><fmt:message key="focus" /></h6>
                                 <ul class="social-iconsv2 agileinfo pt-3">
                                     <li>
                                         <a href="#">
@@ -133,7 +133,7 @@
                                 </ul>
                             </div>
                             <div class="footer-copy text-center">
-                                <p class="text-dark">Copyright &copy;小米饭 SSM框架整合结课作业<br>2020-6-13
+                                <p class="text-dark">Copyright &copy;<fmt:message key="copyright" /><br>2020-6-13
 						<br> Learned it from Teacher Chen</p></p>
                             </div>
                         </div>

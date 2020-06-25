@@ -1,5 +1,9 @@
 package org.bicyclesharing.entities;
 
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 小米饭
  * @date 2020/6/19
@@ -7,7 +11,10 @@ package org.bicyclesharing.entities;
  **/
 public class Emploee {
    private int emploeeid;
+   @NotNull
    private String emploeename;
+
+   @NumberFormat(pattern = "###")
    private int emploeeage;
    private String emploeesex;
    private String emploeeemail;

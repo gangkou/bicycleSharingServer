@@ -2,14 +2,23 @@ package org.bicyclesharing.web;
 
 import org.bicyclesharing.entities.User;
 import org.bicyclesharing.service.UserService;
+import org.bicyclesharing.util.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -123,5 +132,41 @@ public class UserController {
         User user=userService.getUserByEmail(userEmail);
         session.setAttribute("user",user);
         return  "user/user_show";
+    }
+   //注册时的邮箱验证
+    @RequestMapping("sendIdCode.action")
+    public String AjaxSendIdCode(String mail,String name,String password, HttpServletResponse response, HttpServletRequest request)
+            throws IOException, AddressException, MessagingException {
+        response.setCharacterEncoding("utf-8");
+        int idcode = (int) (Math.random()*100000);
+        String text = Integer.toString(idcode);
+        request.getSession().setAttribute("idcode", text);
+        MailUtil mailUtil = new MailUtil();
+        mailUtil.sendMail(mail, text);
+        request.getSession().setAttribute("idcodemsg", "验证码已发至您的邮箱,请注意查收!");
+        String view="redirect:/user_register_reg?mail="+mail+"&name="+name+"&password="+password;
+        return view;
+    }
+    //修改密码时的邮箱验证
+    @RequestMapping("sendIdCode.action.forgot")
+    public String AjaxSendIdCodeforgot(String mail,HttpServletResponse response, HttpServletRequest request)
+            throws IOException,  MessagingException {
+        response.setCharacterEncoding("utf-8");
+        int idcode = (int) (Math.random()*100000);
+        String text = Integer.toString(idcode);
+        request.getSession().setAttribute("idcode", text);
+        if(mail!=null){
+            User user=userService.getUserByEmail(mail);
+            if(user==null){
+                request.getSession().setAttribute("forgot","您还没有注册!请先注册!");
+               return "user/user_register";
+            }
+        }
+        request.getSession().setAttribute("forgotuseremail", mail);
+        MailUtil mailUtil = new MailUtil();
+        mailUtil.sendMail(mail, text);
+        request.getSession().setAttribute("idcodemsg", "验证码已发至您的邮箱,请注意查收!");
+        String view="redirect:/user_forgotcode";
+        return view;
     }
 }

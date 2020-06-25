@@ -73,6 +73,7 @@ public class UserFeedbackController {
 
     /**
      * 2.修改状态为已读
+     *
      * @param id
      * @return
      */
@@ -81,28 +82,29 @@ public class UserFeedbackController {
         userFeedbackService.resolved(id);
         return "redirect:/admin-feedback-list-show?page=1";
     }
+
     /**
      * 3.根据id删除用户反馈
      */
-    @RequestMapping(value="admin-userFeedback-removeuser-execute/{feedbackId}",method=RequestMethod.GET)
-    public String removeUserFeedbackExecute(@PathVariable Integer feedbackId){
-        UserFeedback userFeedback=userFeedbackService.getFeedback(feedbackId);
-        if (userFeedback.getFeedbackStatement()==1){
+    @RequestMapping(value = "admin-userFeedback-removeuser-execute/{feedbackId}", method = RequestMethod.GET)
+    public String removeUserFeedbackExecute(@PathVariable Integer feedbackId) {
+        UserFeedback userFeedback = userFeedbackService.getFeedback(feedbackId);
+        if (userFeedback.getFeedbackStatement() == 1) {
             userFeedbackService.removeFeedback(feedbackId);
         }
         return "redirect:/admin-feedback-list-show?page=1";
     }
 
-    @RequestMapping(value = "admin-userFeedback-removeuser-execute",method = RequestMethod.POST)
-    public String addUserFeedbackExecute(UserFeedback feedback, HttpSession session){
+    @RequestMapping(value = "admin-userFeedback-removeuser-execute", method = RequestMethod.POST)
+    public String addUserFeedbackExecute(UserFeedback feedback, HttpSession session) {
         feedback.setFeedbackTime(new Date());
         feedback.setFeedbackStatement(0);
-        boolean flag=userFeedbackService.addFeedback(feedback);
-        if(flag){
-            session.setAttribute("feedbackresult","我们已接受到您的反馈意见,十分感谢!");
+        boolean flag = userFeedbackService.addFeedback(feedback);
+        if (flag) {
+            session.setAttribute("feedbackresult", "我们已接受到您的反馈意见,十分感谢!");
             return "/index/index_mtla";
-        }else {
-            session.setAttribute("feedbackresult","提交失败,请重试!");
+        } else {
+            session.setAttribute("feedbackresult", "提交失败,请重试!");
             return "/index/index_mtla";
         }
 

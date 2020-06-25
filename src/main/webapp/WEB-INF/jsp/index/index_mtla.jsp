@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -42,15 +44,18 @@
                         </a>
                     </div>
 
+
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="loso-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#HOME" class="nav-item">首页</a></li>
-                        <li><a href="#about" class="nav-item">关于我们</a></li>
-                        <li><a href="#performers" class="nav-item">职员简述</a></li>
-                        <li><a href="#timeline" class="nav-item">公司发展</a></li>
-                        <li><a href="#numbers" class="nav-item">统计数据</a></li>                    
-                        <li><a href="#contact-us" class="nav-item">联系我们</a></li>
+                      <li><a href="#HOME" class="nav-item"><fmt:message key="home" /></a></li>
+                        <li><a href="#about" class="nav-item"><fmt:message key="about" /></a></li>
+                        <li><a href="#performers" class="nav-item"><fmt:message key="introduce" /></a></li>
+                        <li><a href="#timeline" class="nav-item"><fmt:message key="company" /></a></li>
+                        <li><a href="#numbers" class="nav-item"><fmt:message key="data" /></a></li>
+                        <li><a href="#contact-us" class="nav-item"><fmt:message key="contact" /></a></li>
+                        <li><a href="/index_mtla?lang=zh_CN" class="nav-item">中文简体</a></li>
+                        <li><a href="/index_mtla?lang=en_US" class="nav-item">English</a></li>
                   </ul>
                  
                  
@@ -70,8 +75,8 @@
                     <div class="row">
                     <div class="col-md-8 wow bounceIn">
                         <div class="header-text">
-                            <h1>摩托轮拉</h1>
-                            <p>绿色出行，健康生活，为了更美好的明天！</p>
+                            <h1><fmt:message key="mtla" /></h1>
+                            <p><fmt:message key="mtlatittle" /></p>
                         </div>
                         <div class="header-btns">
                           <a href="#about">
@@ -97,16 +102,16 @@
                   } 
                       </script> 
                          <form role="form" class="header-form" name="form1" action="">
-                            <h2>开启新生活</h2>
+                            <h2><fmt:message key="newlife" /></h2>
                              <div class="form-group">                                 
                              </div>
                              <div class="form-group">
-                                 <button type="button" class="btn btn-primary btn-3x" onclick="login()">用户登录 <span> <i class="fa fa-angle-double-right"></i> </span></button>
+                                 <button type="button" class="btn btn-primary btn-3x" onclick="login()"><fmt:message key="userlogin" /><span> <i class="fa fa-angle-double-right"></i> </span></button>
                              </div>
                               <div class="form-group">                                 
                              </div>
                              <div class="form-group">
-                                 <button type="button" class="btn btn-primary btn-3x" onclick="register()">用户注册 <span> <i class="fa fa-angle-double-right"></i> </span></button>
+                                 <button type="button" class="btn btn-primary btn-3x" onclick="register()"><fmt:message key="userregister" /> <span> <i class="fa fa-angle-double-right"></i> </span></button>
                              </div>
                          </form>
                        </div>
@@ -125,8 +130,8 @@
               <div class="container">
                   <div class="row">
                       <div class="col-md-12 wow bounceIn">
-                          <h2 class="section-title">关于MtLa-摩托轮拉</h2>
-                          <p class="under-heading">概览公司特色</p>
+                          <h2 class="section-title"><fmt:message key="home.on"/> </h2>
+                          <p class="under-heading"><fmt:message key="home.overview"/></p>
                       </div>
                   </div>
               </div>
@@ -136,24 +141,25 @@
                    <div class="col-md-4 wow bounceInDown">
                        
                            <a href="#"><i class="fa fa-user fa-5x square"></i></a>
-                           <h3 class="heading">创始人</h3>
-                           <p class="col-caption">小米饭——具有十五年以上软件研发及管理经验；擅长大规模分布式通信系统的架构与开发；曾任携程旅⾏网移动服务端研发负责人及爱立信(中国)研发中心技术专家。擅长大型互联网高可靠、高并发系统架构。</p>
+                           <h3 class="heading"><fmt:message key="home.cerater"/></h3>
+                           <p class="col-caption"><fmt:message key="home.cerater.show"/></p>
                    </div>
                        
                     <div class="col-md-4 wow bounceInDown">
                        
                            <a href="#"><i class="fa fa-bicycle fa-5x"></i></a>
-                           <h3 class="heading">运动</h3>
-                           <p class="col-caption"> 摩托轮拉出行为孤独症孩子打造专属的骑行运动课堂，为其定制更多的户外拓展活动，通过集体训练改善他们的运动技能发展障碍，提供社交机会，帮助星仔们增强自信、变得快乐。</p>
+                           <h3 class="heading"><fmt:message key="home.sport"/></h3>
+                           <p class="col-caption"> <fmt:message key="home.sprot.show"/></p>
                            
                     </div>
                       
                     <div class="col-md-4 wow bounceInRight">
                        
                            <a href="#"><i class="fa fa-location-arrow fa-5x"></i></a>
-                           <h3 class="heading">服务</h3>
+                           <h3 class="heading"><fmt:message key="home.service"/></h3>
                            <p class="col-caption">
-摩托轮拉出行与杭州、合肥、泉州、东营、荆州、襄阳等70多个城市签署战略合作协议。 在绿色环保出行、大数据应用、智慧城市建设、安全骑行教育等领域加强合作，加快推动智能公共交通出行体系的应用。
+                               <fmt:message key="home.service.show"/>
+                           </p>
                     </div>
                </div>
            </div>
@@ -170,7 +176,7 @@
                           <div class="row">
                               <div class="col-md-12">
 
-                                <h2 class="section-title">首席执行官</h2>
+                                <h2 class="section-title"><fmt:message key="ceo"/></h2>
 
                               </div>
                           </div>
@@ -191,31 +197,28 @@
                                     <div class="item active">
                                       <img src="images1/avatar_01.jpg" alt="Client01">
                                       <div class="performer-caption">
-                                        <h2>小米饭 <span class="job"> CEO&CTO </span></h2>
-                                        <p>小米饭——连续创业者，在三年时间里带领摩托轮拉出行从激烈的行业竞争中突围，进化为囊括摩托轮拉单车、摩托轮拉助力车、摩托轮拉车服、摩托轮拉换电和摩托轮拉顺风车等综合业务的专业移动出行平台；入选36氪2019年度新经济引领者36 人；入选《第一财经》2018杰出商界领军者·年度商界青年领军者；入选2018年度CEO峰会·年度创业领军人物TOP10；入选2018胡润百富榜·中国30位×30岁创业领袖；荣获《哈佛商业评论》2018拉姆·查兰管理实践奖·创新创业实践奖；入选2017福布斯中国30位30岁以下商业精英榜。哈哈哈，在梦里。 </p>
+                                        <h2><fmt:message key="ceo.1"/><span class="job"> CEO&CTO </span></h2>
+                                          <p><fmt:message key="ceo.1.show"/></p>
                                       </div>
                                     </div>
                                     <div class="item">
                                       <img src="images1/avatar_02.jpg" alt="Client02">
                                       <div class="performer-caption">
-                                        <h2>小米糊<span class="job">Legal adviser </span></h2>
-                                        <p>常年法律顾问类：
-先后担任深圳市国有资产监督管理委员会、深圳市创新投资集团有限公司、深圳巴士集团股份有限公司、深圳市长城投资控股股份有限公司(证券代码000042)、深圳市深国际物流发展有限公司、深圳市深国际华南物流有限公司、深圳市深国际西部物流有限公司、深国际前海实业（深圳）有限公司、深圳市深圳通有限公司常年法律顾问。</p>
+                                        <h2><fmt:message key="ceo.2"/><span class="job">Legal adviser </span></h2>
+                                          <p><fmt:message key="ceo.2.show"/></p>
                                       </div>
                                     </div>
                                     <div class="item">
                                       <img src="images1/avatar_03.jpg" alt="Client03">
                                       <div class="performer-caption">
-                                        <h2>小米粥<span class="job">CFO</span></h2>
-                                        <p>是现代公司中最重要、最有价值的顶尖管理职位之一，是掌握着企业的神经系统（财务信息）和血液系统（现金资源）灵魂人物。财务总监业务职责:了解在当前销售策略下的市场状况组织领导公司的财务管理、成本管理、预算管理、会计核算、会计监督、审计监察、存货控制等方面工作，加强公司经济管理，提高经济效益。</p>
+                                        <h2><fmt:message key="ceo.3"/><span class="job">CFO</span></h2>
+                                          <p><fmt:message key="ceo.3.show"/></p>
                                       </div>
                                     </div>
                                    </div>
-                            
                            </div>
                         </div>
                        </div>
-               
                        </div>
                        </div>
                </div>
@@ -282,8 +285,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="section-title">统计数据</h2>
-                            <p class="under-heading">荣誉成就</p>
+                            <h2 class="section-title"><fmt:message key="datashow"/></h2>
+                            <p class="under-heading"><fmt:message key="honur"/></p>
                         </div>
                     </div>
                 </div>
@@ -293,29 +296,29 @@
                             <div class="col-md-3">
                                 <div class="num-data block-inline">
                                     <i class="fa fa-flag fa-5x"></i>
-                                    <div class="counter">189.9</div>亿公里
-                                    <p>骑行总里程</p>
+                                    <div class="counter">189.9</div><fmt:message key="mile"/>
+                                    <p><fmt:message key="miless"/></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="num-data block-inline">
                                     <i class="fa fa-database fa-5x"></i>
-                                    <div class="counter">47</div>万圈
-                                    <p>绕地球圈数</p>
+                                    <div class="counter">47</div><fmt:message key="orcle"/>
+                                    <p><fmt:message key="orcless"/></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="num-data block-inline">
                                     <i class="fa fa-bicycle fa-5x"></i>
-                                    <div class="counter">147</div>万吨
-                                    <p>碳排放减少量</p>
+                                    <div class="counter">147</div><fmt:message key="carbon"/>
+                                    <p><fmt:message key="carbonss"/></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="num-data block-inline">
                                     <i class="fa fa-life-ring fa-5x"></i>
-                                    <p><div class="counter">7874</div>万棵
-                                    <p>树种植作用</p>
+                                    <p><div class="counter">7874</div><fmt:message key="tree"/>
+                                    <p><fmt:message key="treess"/></p>
                                 </div>
                             </div>
                         </div>
@@ -328,8 +331,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 wow bounceInDown">
-                            <h2 class="section-title">反馈意见</h2>
-                            <p class="under-heading">将您的使用感受告诉我们吧</p>
+                            <h2 class="section-title"><fmt:message key="feedback"/></h2>
+                            <p class="under-heading"><fmt:message key="tellme"/></p>
                         </div>
                     </div>
                 </div>
@@ -342,21 +345,21 @@
                             <div class="col-md-6 wow bounceInLeft">
                                 
                                     <div class="form-group">
-                                        <input type="text" placeholder="主题" class="form-control input-lg" name="feedbackTitle">
+                                        <input type="text" placeholder="<fmt:message key="feedbacktittle"/>" class="form-control input-lg" name="feedbackTitle">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="您的邮箱" class="form-control input-lg" name="userEmail">
+                                        <input type="email" placeholder="<fmt:message key="feedbackemail"/>" class="form-control input-lg" name="userEmail">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="车辆编号" class="form-control input-lg" name="bicycleId">
+                                        <input type="text" placeholder="<fmt:message key="feedbackbicycleid"/>" class="form-control input-lg" name="bicycleId">
                                     </div>
                                 
                             </div>
                             <div class="col-md-6 wow bounceInRight">
                                <div class="form-group">
-                                <textarea placeholder="填写信息" class="form-control " name="feedbackContent"></textarea>
+                                <textarea placeholder="<fmt:message key="feedbackcontent"/>" class="form-control " name="feedbackContent"></textarea>
                                </div>
-                               <button type="submit" class="btn btn-primary btn-block input-lg">发送反馈</button>
+                               <button type="submit" class="btn btn-primary btn-block input-lg"><fmt:message key="feedbacksend"/></button>
                             </div>
                         </div>
                         </form>
@@ -383,15 +386,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <p class="footer-text" >Copyright &copy;小米饭 SSM框架整合结课作业<br>2020-6-12
+                            <p class="footer-text" >Copyright &copy;<fmt:message key="copyright"/><br>2020-6-12
 						<br> Learned it from Teacher Chen</p>
                         </div>
                         <div class="col-md-4">
-                            <p class="footer-text">MtLa-摩托轮拉</p>
+                            <p class="footer-text"><fmt:message key="footmiddle"/></p>
                         </div>
                         <div class="col-md-4">
-                            <p class="footer-text">为您倾情奉献 <span class="usama"><a href="#/UsamaElsayed90">小米饭</a></span>
-                            <br><span class="usama"><a href="admin-index-index-show">管理员登录</a></span>
+                            <p class="footer-text"><fmt:message key="showforyou"/> <span class="usama"><a href="#/UsamaElsayed90"><fmt:message key="author"/></a></span>
+                            <br><span class="usama"><a href="admin-index-index-show"><fmt:message key="adminlogin"/></a></span>
                             </p>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <!--配置SpringMVC-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
     <mvc:default-servlet-handler/>
     <!--(设置url显示前缀后缀)-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -54,4 +54,27 @@ http://www.springframework.org/schema/beans/spring-beans.xsd     http://www.spri
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <!--数据格式化-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionService">
+    </bean>
+
+    <!-- 存储区域设置信息:默认语言 -->
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="zh_CN" />
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="basenames" value="show">
+        </property>
+    </bean>
+    <!--重新设置页面的区域化信息-->
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor"
+              class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang" />
+        </bean>
+    </mvc:interceptors>
 </beans>

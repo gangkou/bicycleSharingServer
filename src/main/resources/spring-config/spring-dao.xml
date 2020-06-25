@@ -26,7 +26,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
         <property name="dataSource" ref="dataSource"/>
         <!--配置MyBatis全局配置文件-->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--扫描实体类包,减少编码-->
+
         <property name="typeAliasesPackage" value="org.bicyclesharing.entities"/>
         <!--扫描sql语句的xml文件,减少编码classpath不能少-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
@@ -35,7 +35,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--注入sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <!--给出需要扫描的DAO接口的包,为什么给我扫到test里的文件夹,有毒吧-->
+
         <property name="basePackage" value="org.bicyclesharing.dao"/>
     </bean>
 </beans>

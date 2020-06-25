@@ -10,14 +10,13 @@ import org.bicyclesharing.service.RechargeService;
 import org.bicyclesharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Session;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,17 +98,32 @@ public class UserApi {
      * @return
      */
     @RequestMapping(value = "api-user-register")
-    public String register(@RequestParam("userEmail") String userEmail,@RequestParam("userPassword") String userPassword,@RequestParam("userName") String userName) {
-        if (userService.getUserByEmail(userEmail) != null) {
-            //邮箱已注册
-            return "user/user_register";
-        }else {
-            boolean registerSuccess = userService.register(userEmail,userName,userPassword);
-            if (registerSuccess) {
-                return "user/user_login";
-            } else {
+    public String register(@RequestParam("userEmail") String userEmail,@RequestParam("userPassword") String userPassword,@RequestParam("userName") String userName,@RequestParam("idcode") String idcode,HttpSession session) {
+        if(session.getAttribute("idcode")==null){
+            session.setAttribute("idcodeMsg", "请获取正确的验证码!");
+            return "user/user_register";}
+
+        if(userEmail!=null) {
+            if (userService.getUserByEmail(userEmail) != null) {
+                //邮箱已注册
+                session.setAttribute("registerresult", "用户已存在");
+                return "user/user_register";
+            } else if (!session.getAttribute("idcode").equals(idcode)) {
+                session.setAttribute("idcodeMsg", "验证码错误!");
                 return "user/user_register";
             }
+            boolean registerSuccess = userService.register(userEmail, userName, userPassword);
+            if (registerSuccess) {
+                session.setAttribute("registerresult", "注册成功,尝试登录吧!");
+                return "user/user_login";
+            }
+            else {
+                session.setAttribute("registerresult", "注册失败请重试!");
+                return "user/user_register";
+            }
+        }else {
+            session.setAttribute("registerresult", "注册失败请重试!");
+                return "user/user_register";
         }
     }
 
@@ -223,7 +237,9 @@ public class UserApi {
         User user = userService.getUserByEmail(useremail);
         if (user.getUserAccount().compareTo(new BigDecimal(199)) == -1) {
             session.setAttribute("changeCash","您的余额不足以支付押金199元 \n请充值后尝试!");
-            return "redirect:/user_recharge";
+           String view="redirect:/user_recharge";
+           return  view;
+
         } else {
             userService.changeCashOne(user.getUserEmail());
             session.setAttribute("changeCash","已从余额中扣除199元 \n成功支付押金");
@@ -256,12 +272,74 @@ public class UserApi {
     }
 
     @RequestMapping("user_register")
-    public String userRegister(){
+    public String userRegister(HttpServletRequest request,Map<String,Object> map) {
+        String mail=request.getParameter("mail");
+        String name=request.getParameter("name");
+        String password=request.getParameter("password");
+
+        map.put("mail",mail);
+        map.put("name",name);
+        map.put("password",password);
         return "user/user_register";
     }
 
+    @RequestMapping("user_register_reg")
+    public String userRegisterreg(HttpServletRequest request,Map<String,Object> map) throws UnsupportedEncodingException {
+        String mail=request.getParameter("mail");
+        String name=request.getParameter("name");
+        String password=request.getParameter("password");
+        name=java.net.URLDecoder.decode(name,"utf-8");
+        map.put("mail",mail);
+        map.put("name",name);
+        map.put("password",password);
+        return "user/user_register";
+    }
+    //骑行导航
     @RequestMapping("user_riding")
     public String userRiding(){
         return "user/user_riding";
+    }
+
+    //忘记密码 输入邮箱
+    @RequestMapping("user_forgot")
+    public String forgotemail(){
+        return "user/user_forgot";
+    }
+    //输入验证码
+    @RequestMapping("user_forgotcode")
+    public String forgotcode(){
+        return "user/user_forgotcode";
+    }
+    //验证验证码
+    @RequestMapping("user_forgotcodejuge")
+    public String forgotcodejuge(@RequestParam("code") String code,HttpSession session){
+       if(!session.getAttribute("idcode").equals(code)){
+           session.setAttribute("forgotcode","请获取正确的验证码!");
+           return "user/user_forgot";
+       }else {
+          return "user/user_forgotpassword";
+       }
+    }
+    //输入新密码
+    @RequestMapping("user_forgotpassword")
+    public String forgotpassword(){
+        return "user/user_forgotpassword";
+    }
+
+    /**
+     * 用户忘记密码
+     * @return
+     */
+    @RequestMapping(value = "api-user-forget")
+    public String register(@RequestParam("userPassword") String userPassword,HttpSession session) {
+        String userEmail = (String) session.getAttribute("forgotuseremail");
+        if (userEmail != null) {
+            User user = userService.getUserByEmail(userEmail);
+            user.setUserPassword(userPassword);
+            userService.editUser(user);
+            session.setAttribute("forgotresult", "密码已修改,请登录重试!");
+            return "user/user_login";
+        }
+        return "user/user_forgot";
     }
 }

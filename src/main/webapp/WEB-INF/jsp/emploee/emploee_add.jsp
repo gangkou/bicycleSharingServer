@@ -37,14 +37,14 @@
                                 <div class="am-form-group">
                                     <label for="emploee-name" class="am-u-sm-3 am-form-label">姓名</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text"  class="tpl-form-input" id="emploee-name" placeholder="" name="emploeename">
+                                        <input type="text" minlength="6" maxlength="20" class="tpl-form-input" id="emploee-name" placeholder="" name="emploeename">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label for="emploee-age" class="am-u-sm-3 am-form-label">年龄</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" max="120" min="1"   class="tpl-form-input" id="emploee-age" placeholder="" name="emploeeage">
+                                        <input type="number" max="60" min="16"   class="tpl-form-input" id="emploee-age" placeholder="" name="emploeeage">
                                     </div>
                                 </div>
 
@@ -58,14 +58,14 @@
                                 <div class="am-form-group">
                                     <label for="emploee-email" class="am-u-sm-3 am-form-label">邮箱</label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" class="tpl-form-input" id="emploee-email" placeholder="" name="emploeeemail">
+                                        <input type="email" class="tpl-form-input" id="emploee-email" placeholder="" name="emploeeemail">
                                     </div>
                                 </div>
 
                                 <div class="am-form-group">
                                     <label for="department-id" class="am-u-sm-3 am-form-label">部门编号</label>
                                     <div class="am-u-sm-9">
-                                        <input type="number" max="4" min="1" class="tpl-form-input" id="department-id" placeholder="" name="emploeedepartid">
+                                        <input type="text" class="tpl-form-input" id="department-id" placeholder="" name="emploeedepartid">
                                     </div>
                                 </div>
 
