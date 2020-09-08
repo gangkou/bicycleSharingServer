@@ -1,3 +1,4 @@
+![Image text](https://raw.githubusercontent.com/gangkou/bicycleSharingServer/master/show_images/1.jpg)
 # bicycleSharingServer
 # SSM整合 项目实践  
 ## ~~6/13日 管理员后台已修改~~  
@@ -29,3 +30,4 @@
 ##6/25 https://www.cnblogs.com/exmyth/p/5308390.html 记录用前端两次编码 后端解码的方式解决了js 通过url传参 中文乱码的问题 
 ##~~19:20 目前还差注册界面的国际化 忘记密码 加油 奥利给!!!!~~ 
 ##~~22:00完工~~ 
+
